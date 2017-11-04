@@ -77,7 +77,7 @@ def homepage():
                 patient = Patient.query.filter_by(patient_id = patient_id).first()
                 patient.reminder_hour = reminder_hour if reminder_hour != None else patient_form.reminder_hour
                 patient.reminder_minute = reminder_minute if reminder_minute != None else patient_form.reminder_minute
-                patient.patient_contact_phone_number = patient_contact_phone_number if patient_contact_phone_number != None else
+                patient.patient_contact_phone_number = patient_contact_phone_number if patient_contact_phone_number != None else patient_contact_phone_number
                 patient.patient_phone_number = patient_phone_number if patient_phone_number != None else patient.patient_phone_number
                 DB.session.commit()
                 # Next we will update the call the patient job if one of those values was edited
