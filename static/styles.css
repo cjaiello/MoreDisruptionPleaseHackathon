@@ -178,7 +178,7 @@ input:-ms-input-placeholder {
   color: #a1ce5b !important;
 }
 
-.styled-select {
+.styled_select {
    background: #e0f3c2;
    border: none;
    font-size: 20px;
