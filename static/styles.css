@@ -87,6 +87,7 @@ p {
 .footer {
   height: 20px;
   width: 1010px;
+  font-size: 14px;
   -moz-border-bottom-left-radius: 20px;
   -moz-border-bottom-right-radius: 20px;
   -webkit-border-bottom-left-radius: 20px;
