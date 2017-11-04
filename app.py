@@ -193,7 +193,8 @@ def talk():
         action='http://oldiesbutgoodies.herokuapp.com/recording',
         method='GET',
         max_length=20,
-        finish_on_key='*'
+        finish_on_key='*',
+        transcribe=True
     )
     resp.say('I did not receive a recording')
     return str(resp)
