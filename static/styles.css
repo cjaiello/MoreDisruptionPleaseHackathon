@@ -98,6 +98,7 @@ p {
   margin: 0 auto;
   color: #ffffff;
 	text-align: center;
+  padding: 20px;
 }
 
 .submitButton {
