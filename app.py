@@ -191,7 +191,7 @@ def hello_monkey():
     resp.say("Christina can go get dinner now that this works.")
     resp.record(timeout=10, transcribe=True)
 
-    return str(resp)
+    print(str(resp))
 
 
 if __name__ == '__main__':
