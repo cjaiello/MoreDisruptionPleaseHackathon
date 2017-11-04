@@ -3,11 +3,12 @@ input[type=text] {
   width: 200px;
   height: 25px;
 	font-size: 14px;
+	color: #10496a;
 	padding: 0px 5px 0px 5px;
 	margin-top: 5px;
-	background-color: #d0efa2;
+	background-color: #ecf8da;
 	border-style:solid;
-	border-color: #d0efa2;
+	border-color: #ecf8da;
 }
 
 body {
@@ -92,14 +93,14 @@ p {
   -webkit-border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #3e8685;
+  background-color: #10496a;
   margin: 0 auto;
   color: #ffffff;
 	text-align: center;
 }
 
 .submitButton {
-  background-color: #d0efa2;
+  background-color: #10496a;
   color: #ffffff;
 	height: 40px;
   font-weight: bold;
@@ -126,7 +127,7 @@ p {
 }
 
 .navigation {
-  background-color: #3e8685;
+  background-color: #10496a;
   margin: 0 auto;
   width: 800px;
   color: #ffffff;
