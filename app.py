@@ -44,7 +44,7 @@ class Patient(DB.Model):
 
 # Our form model
 class PatientForm(Form):
-    patient_id = TextField('Username:', validators=[validators.required()])
+    patient_id = TextField('Patient ID:', validators=[validators.required()])
     patient_password = TextField('Password:')
     reminder_hour = TextField('Time to Call Patient:')
     reminder_minute = TextField('Time to Call Patient:')
