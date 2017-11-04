@@ -1,11 +1,11 @@
 input[type=text] {
   border-radius: 4px;
   width: 200px;
-  height: 25px;
-	font-size: 14px;
+  height: 45px;
+	font-size: 25px;
 	color: #10496a;
 	padding: 0px 5px 0px 5px;
-	margin-top: 5px;
+	margin-top: 10px;
 	background-color: #e0f3c2;
 	border-style:solid;
 	border-color: #e0f3c2;
