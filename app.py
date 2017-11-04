@@ -49,6 +49,7 @@ class PatientForm(Form):
     patient_phone_number = TextField('Patient\'s Phone Number:')
     patient_contact_name = TextField('Patient Contact\'s Name:')
     patient_contact_phone_number = TextField('Patient Contact\'s Phone Number:')
+    am_or_pm = ['am', 'pm']
 
 
 @app.route("/", methods=['GET', 'POST'])
