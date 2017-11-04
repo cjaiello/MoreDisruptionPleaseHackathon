@@ -180,9 +180,5 @@ input:-ms-input-placeholder {
 
 .styled_select {
    background: #e0f3c2;
-   border: none;
    font-size: 20px;
-   height: 40px;
-   padding: 5px;
-   width: 100px;
 }
