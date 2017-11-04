@@ -6,9 +6,9 @@ input[type=text] {
 	color: #10496a;
 	padding: 0px 5px 0px 5px;
 	margin-top: 5px;
-	background-color: #ecf8da;
+	background-color: #e0f3c2;
 	border-style:solid;
-	border-color: #ecf8da;
+	border-color: #e0f3c2;
 }
 
 body {
@@ -93,14 +93,14 @@ p {
   -webkit-border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #10496a;
+  background-color: #0d8197;
   margin: 0 auto;
   color: #ffffff;
 	text-align: center;
 }
 
 .submitButton {
-  background-color: #10496a;
+  background-color: #0d8197;
   color: #ffffff;
 	height: 40px;
   font-weight: bold;
@@ -127,7 +127,7 @@ p {
 }
 
 .navigation {
-  background-color: #10496a;
+  background-color: #0d8197;
   margin: 0 auto;
   width: 800px;
   color: #ffffff;
