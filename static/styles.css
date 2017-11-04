@@ -132,7 +132,7 @@ p {
 .navigation {
   background-color: #0d8197;
   margin: 0 auto;
-  width: 1010px;
+  width: 1000px;
   color: #ffffff;
   margin-top: 50px;
   padding: 10px 5px 10px 5px;
@@ -145,7 +145,7 @@ p {
 }
 
 .index_white_textbox {
-  width: 950px;
+  width: 970px;
   padding: 10px 20px 10px 20px;
   overflow: auto;
 }
