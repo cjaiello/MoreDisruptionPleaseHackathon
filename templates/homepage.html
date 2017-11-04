@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 
-<body bgcolor="#181818">
+<body bgcolor="#10496a">
 
 	<nav class="navigation">
 		<div class="header_text">
@@ -24,8 +24,9 @@
 		<form action="" method="post">
 
 			{{ form.csrf }}
+			<div class="directions">
 				<center>
-					<img src="static/icon.png" class="centered">
+					<img src="static/logo.svg" id="icon" width="300" height="300" class="centered">
 				</center>
 
 				<p>Use this form to add or update your patient information.</p>
@@ -34,35 +35,26 @@
 					<li>Hours are in military time, so 1pm == 13, 2pm == 14, etc.</li>
 					<li>Patient name is the only required field.</li>
 				</ol>
+			</div>
 
 			<div class="input text">
 				{{ form.patient_id.label }}
-				<br>
-				{{ form.patient_id }}
+				<br> {{ form.patient_id }}
 			</div>
 
 			<div class="input password">
 				{{ form.patient_password.label }}
-				<br>
-				{{ form.patient_password }}
+				<br> {{ form.patient_password }}
 			</div>
 
 			<div class="input text">
 				{{ form.reminder_hour.label }}
-				<br>
-				{{ form.reminder_hour }}
-			</div>
-
-			<div class="input text">
-				{{ form.reminder_minute.label }}
-				<br>
-				{{ form.reminder_minute }}
+				<br> {{ form.reminder_hour(class_="time") }} {{ form.reminder_minute(class_="time") }}
 			</div>
 
 			<div class="input text">
 				{{ form.patient_contact_phone_number.label }}
-				<br>
-				{{ form.patient_contact_phone_number }}
+				<br> {{ form.patient_contact_phone_number }}
 			</div>
 
 			<div class="input submit">
