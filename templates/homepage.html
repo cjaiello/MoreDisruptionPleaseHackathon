@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>DX Slack Standup Bot Scheduler</title>
+	<title>Oldies But Goodies</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 
@@ -22,15 +22,18 @@
 
 	<section class="index_white_textbox">
 		<form action="" method="post">
+
 			{{ form.csrf }}
-			<div class="directions">
+				<center>
+					<img src="static/icon.png" class="centered">
+				</center>
+
 				<p>Use this form to add or update your patient information.</p>
 
 				<ol>
 					<li>Hours are in military time, so 1pm == 13, 2pm == 14, etc.</li>
 					<li>Patient name is the only required field.</li>
 				</ol>
-			</div>
 
 			<div class="input text">
 				{{ form.patient_id.label }}
