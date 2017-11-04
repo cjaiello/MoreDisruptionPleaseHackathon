@@ -189,6 +189,7 @@ def hello_monkey():
     """Respond to incoming requests."""
     resp = VoiceResponse()
     resp.say("Christina can go get dinner now that this works.")
+    resp.record(timeout=10, transcribe=True)
 
     return str(resp)
 
