@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "dogwood-reality-125922",
+  "private_key_id": "eb5a4e93b849e8fbff16ef413981cc8f804f842d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC4yWj0boR0EeX1\nTm4zk5xtCSBvcEJUJr/sv/CyDSUhUddGtO89l2R8whCnXFu7jsT0h900wrY6FA8f\nHIixieaXl5YFg73wS2LDw4j1aNUWi336jU1uVCfInkMf/0dztdodnRte468WNuJ8\nw/wiyAAWUsNQIib8shrT5I7GYj7G6JmSJEReprHY5Rhg6mmJoIXhIreSa6hZrEeO\nzJtHAgysfU4AaYzSYVsiUyRfBNDbJnVa1hsx1iDByPXZrDk4RcFPKJJxYWOVWI07\nyTypj1c78kAXUYd7FCILopCNSAfetZw9Hr9+vqzyQN/2KliL8E7dAN4iB5z4SrNo\nQyduhs8hAgMBAAECggEAKPjVme8AVOkcCzB0/GAkLMP7imICfvypjQHBCYWjIDhw\nine3XTl6eTQhc65lk5h0IMEYQejTdVy5vpz5zR3FwIKGq9nabVOVxlDOhxWTu+A5\nkmquysIDoTbALPHSIrylbHAHn9pNmdgZD294MjEU3d5Derrb2KdYDfgNVTz27OzI\nufZo2Dm304sc66JpI9UDCowX8lebXLFIstxK9KF78lZ5+blMshniwt608UX0odPb\n3TXzU5N/npyIuqFN8UeJBfKqUjGfOENfUrJ9FSVfvbI2tfA60/boEpSOqvW1SDUs\nG3wtjxkpDGRh9olHZsHb0rAvf067+A7WIuT+LGcs/QKBgQDuDvv/l347AC2lBUO8\nen3J7h7C96rwNtE4OLz96ZrGowTnBRGKAWdSa5mzKcjTO+FMko+daejVB74WwxKG\nUtxchCUHEeSAI8L4Cxg89TYl27GARbfm3+83T2rNkAu40jmSHEtavocr/4pGKsxh\nX0HCjl3OKIqFRzKNqyNyqWsLLQKBgQDGtp6BafvlbfY5yzlLdb6Rw4skJmqqGUl4\nBhwgTBmX84nLMro5U2C35Q3FMIPE7w3hx4RFEhpUq4BMHSYkUrIto2TSZ1U5jwDf\n2udBQXemjjrv7/2nNYUG5YThiqIprOPVpxF3jWaI3tnhuzUzTkp2nFroak4dpUkR\nJQO/Fi98RQKBgQCYXLzKnFItPvL30EPHKPrDOAU2Mb+VGPCVNDM5q77k7Udg+Kx+\nEGHprXZk5hRjpcqP8Km8TSG43si51sZPdE8XY3gzay89GCZcDPXJZgPu/QpBF94Z\nBTAczVaFFHF8LAiuzC8qeBEZhucf+5pto8L525aMMQRfQu9HHsaER4x8TQKBgQCg\n0YTgOZTqLh8a0NTStD0BnN7L5+dlOEfUQiWbIduItUlsUOaTpF3fFhoZ31SVGd8D\nPcRXXfo/UfjoIKMQvHiFJPpgqc44YfqUMIX9su0Rt4QNUQ3YuCCr3y62lcr9rXVK\nIQaq2Z4E4U42OJsqpY7wBUQxWm9T4MOMg4dPq7XMfQKBgQCAn+3CDcTbk/9ymPWl\nMPIyIfeiadMCLnsXbN3UtljrH3RiWjcnl6zzYPsDdehN0HHx/myY5MdmhKdwMUkx\n9OV1OMFqLB+BrQF/g0K5XVbv3JgfsJJFy7fPCzN9Zfh2oPWrZdidALuFe/uYgHct\nXFLOzVqGQPHjpGqih1vgGFZXUw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "oldiesbutgoodies@dogwood-reality-125922.iam.gserviceaccount.com",
+  "client_id": "107011156617123839258",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/oldiesbutgoodies%40dogwood-reality-125922.iam.gserviceaccount.com"
+}
