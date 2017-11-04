@@ -1,4 +1,5 @@
 from twilio.rest import Client
+from twilio.twiml.voice_response import VoiceResponse
 
 # Your Account SID from twilio.com/console
 account_sid = "ACa7e27f592a57a9ec9d23873331ddbdad"
@@ -10,6 +11,6 @@ client = Client(account_sid, auth_token)
 call = client.calls.create(
     to="+19788579570",
     from_="+18573203552",
-    url="http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient")
+    url="http://www.christinaaiello.com/call_handler.xml")
 
 print(call.sid)
