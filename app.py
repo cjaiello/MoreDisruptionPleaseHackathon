@@ -131,6 +131,19 @@ def format_minutes_to_have_zero(minutes):
         else:
             return str(minutes)
 
+# Parse phone number
+def parse_phone_number(phone_number_string):
+    # Remove dashes
+    phone_number_string = phone_number_string.replace('-','')
+    # Remove spaces
+    phone_number_string = phone_number_string.replace(' ','')
+    # Remove parens
+    phone_number_string = phone_number_string.replace('(','')
+    phone_number_string = phone_number_string.replace(')','')
+    #Remove periods
+    phone_number_string = phone_number_string.replace('.','')
+return
+
 
 # Scheduler doesn't like zeros at the start of numbers...
 # @param time: string to remove starting zeros from
