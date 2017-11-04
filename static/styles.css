@@ -51,7 +51,7 @@ p {
 
 .separator_line, .second_separator_line {
   margin: 0 auto;
-  width: 800px;
+  width: 1000px;
   height: 8px;
   padding-left: 5px;
   padding-right: 5px;
@@ -86,7 +86,7 @@ p {
 
 .footer {
   height: 20px;
-  width: 810px;
+  width: 1010px;
   -moz-border-bottom-left-radius: 20px;
   -moz-border-bottom-right-radius: 20px;
   -webkit-border-bottom-left-radius: 20px;
@@ -129,7 +129,7 @@ p {
 .navigation {
   background-color: #0d8197;
   margin: 0 auto;
-  width: 800px;
+  width: 1000px;
   color: #ffffff;
   margin-top: 50px;
   padding: 10px 5px 10px 5px;
@@ -142,7 +142,7 @@ p {
 }
 
 .index_white_textbox {
-  width: 750px;
+  width: 950px;
   padding: 15px 30px 15px 30px;
   overflow: auto;
 }
