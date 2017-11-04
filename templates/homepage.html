@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!-- Standup Bot by Christina Aiello, 2017 -->
+<html>
+
+<head>
+	<title>DX Slack Standup Bot Scheduler</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+
+<body bgcolor="#181818">
+
+	<nav class="navigation">
+		<div class="header_text">
+			DX Slack Standup Bot Scheduler
+		</div>
+	</nav>
+
+	<section class="separator_line">
+	</section>
+	<section class="second_separator_line">
+	</section>
+
+	<section class="index_white_textbox">
+		<form action="" method="post">
+			{{ form.csrf }}
+			<div class="directions">
+				<center>
+					<img src="static/logo.svg" class="centered">
+				</center>
+
+				<p>Use this form to add or update your standup information.</p>
+
+				<ol>
+					<li>Hours are in military time, so 1pm == 13, 2pm == 14, etc.</li>
+					<li>Channel name is the only required field.</li>
+					<li>Don't include the # in front of your channel name.</li>
+					<li>Standup results are emailed out at 1pm every day (if you requested emails).</li>
+				</ol>
+			</div>
+
+			<div class="input text">
+				{{ form.submitted_channel_name.label }}
+				<br>
+				{{ form.submitted_channel_name }}
+			</div>
+
+			<div class="input text">
+				{{ form.standup_hour.label }}
+				<br>
+				{{ form.standup_hour }}
+			</div>
+
+			<div class="input text">
+				{{ form.standup_minute.label }}
+				<br>
+				{{ form.standup_minute }}
+			</div>
+
+			<div class="input text">
+				{{ form.message.label }}
+				<br>
+				{{ form.message }}
+			</div>
+
+			<div class="input text">
+				{{ form.email.label }}
+				<br>
+				{{ form.email }}
+			</div>
+
+			<div class="input submit">
+				<input class="submitButton" type="submit" value="Submit" />
+			</div>
+		</form>
+	</section>
+	<!-- Closing tag for main white text box -->
+
+	<!-- Adds a bar across the page for colors -->
+	<section class="second_separator_line">
+	</section>
+	<section class="separator_line">
+	</section>
+
+	<!-- Bottom Bar -->
+	<footer class="footer">
+		Standup bot by <a href="https://github.com/cjaiello">Christina Aiello</a>
+	</footer>
+</body>
+
+</html>
