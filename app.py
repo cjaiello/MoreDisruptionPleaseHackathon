@@ -55,7 +55,7 @@ def homepage():
         patient_password = request.form['patient_password']
         reminder_hour = remove_starting_zeros_from_time(request.form['reminder_hour'])
         reminder_minute = remove_starting_zeros_from_time(request.form['reminder_minute'])
-        patient_contact_phone_number = request.form['patient_contact_phone_number']
+        patient_contact_phone_number = parse_phone_number(request.form['patient_contact_phone_number'])
         # If the form field was valid...
         if form.validate():
             # Look for patient in database
@@ -131,6 +131,7 @@ def format_minutes_to_have_zero(minutes):
         else:
             return str(minutes)
 
+
 # Parse phone number
 def parse_phone_number(phone_number_string):
     # Remove dashes
@@ -142,7 +143,7 @@ def parse_phone_number(phone_number_string):
     phone_number_string = phone_number_string.replace(')','')
     #Remove periods
     phone_number_string = phone_number_string.replace('.','')
-return
+    return phone_number_string
 
 
 # Scheduler doesn't like zeros at the start of numbers...
