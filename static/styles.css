@@ -3,12 +3,11 @@ input[type=text] {
   width: 200px;
   height: 25px;
 	font-size: 14px;
-	color: #186cab;
 	padding: 0px 5px 0px 5px;
 	margin-top: 5px;
-	background-color: #b7edfa;
+	background-color: #d0efa2;
 	border-style:solid;
-	border-color: #b7edfa;
+	border-color: #d0efa2;
 }
 
 body {
@@ -58,11 +57,11 @@ p {
 }
 
 .separator_line {
-  background-color: #68cff0;
+  background-color: #a9daaa;
 }
 
 .second_separator_line {
-  background-color: #a1e6f7;
+  background-color: #d0efa2;
 }
 
 .index_white_textbox {
@@ -93,14 +92,14 @@ p {
   -webkit-border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-color: #186cab;
+  background-color: #3e8685;
   margin: 0 auto;
   color: #ffffff;
 	text-align: center;
 }
 
 .submitButton {
-  background-color: #2da5d0;
+  background-color: #d0efa2;
   color: #ffffff;
 	height: 40px;
   font-weight: bold;
@@ -127,7 +126,7 @@ p {
 }
 
 .navigation {
-  background-color: #186cab;
+  background-color: #3e8685;
   margin: 0 auto;
   width: 800px;
   color: #ffffff;
