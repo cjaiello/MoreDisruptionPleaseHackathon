@@ -39,12 +39,12 @@
 
 			<div class="input text">
 				{{ form.patient_id.label }}
-				<br> {{ form.patient_id }}
+				<br> {{ form.patient_id(placeholder="Patient's Username") }}
 			</div>
 
 			<div class="input password">
 				{{ form.patient_password.label }}
-				<br> {{ form.patient_password }}
+				<br> {{ form.patient_password(placeholder="Patient's Password") }}
 			</div>
 
 			<div class="input text">
@@ -54,7 +54,7 @@
 
 			<div class="input text">
 				{{ form.patient_contact_phone_number.label }}
-				<br> {{ form.patient_contact_phone_number }}
+				<br> {{ form.patient_contact_phone_number(placeholder="000-000-0000") }}
 			</div>
 
 			<div class="input submit">
