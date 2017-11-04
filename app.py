@@ -8,7 +8,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, request, Response, jsonify, render_template
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from twilio.rest import Client
-
+from twilio.twiml.voice_response import VoiceResponse
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
@@ -182,6 +182,15 @@ def calculate_am_or_pm(reminder_hour, am_or_pm):
 # @param time: string to remove starting zeros from
 def remove_starting_zeros_from_time(time):
     return (re.search( r'0?(\d+)?', time, re.M|re.I)).group(1)
+
+
+@app.route("/test", methods=['GET', 'POST'])
+def hello_monkey():
+    """Respond to incoming requests."""
+    resp = VoiceResponse()
+    resp.say("Hello Monkey")
+
+    return str(resp)
 
 
 if __name__ == '__main__':
