@@ -15,7 +15,7 @@ DB = SQLAlchemy(app)
 SCHEDULER = BackgroundScheduler()
 
 # Create our database model
-class PatientForm(DB.Model):
+class Patient(DB.Model):
     __tablename__ = "channel"
     id = DB.Column(DB.Integer, primary_key=True)
     patient_id = DB.Column(DB.String(120), unique=True)
@@ -58,9 +58,9 @@ def homepage():
         # If the form field was valid...
         if form.validate():
             # Look for patient in database
-            if not DB.session.query(PatientForm).filter(PatientForm.patient_id == patient_id).count():
+            if not DB.session.query(Patient).filter(Patient.patient_id == patient_id).count():
                 # Patient isn't in database. Create our patient object and add them to the database
-                patient = PatientForm(patient_id, reminder_hour, reminder_minute, patient_contact_phone_number)
+                patient = Patient(patient_id, reminder_hour, reminder_minute, patient_contact_phone_number)
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
@@ -69,7 +69,7 @@ def homepage():
 
             else:
                 # Update user's info (if values weren't empty)
-                channel = PatientForm.query.filter_by(patient_id = patient_id).first()
+                channel = Patient.query.filter_by(patient_id = patient_id).first()
                 patient_form.reminder_hour = reminder_hour if reminder_hour != None else patient_form.reminder_hour
                 patient_form.reminder_minute = reminder_minute if reminder_minute != None else patient_form.reminder_minute
                 patient_form.patient_contact_phone_number = patient_contact_phone_number if patient_contact_phone_number != None else patient_form.patient_contact_phone_number
@@ -91,12 +91,12 @@ def homepage():
 def set_schedules():
     print(create_logging_label() + "Loading previously-submitted reminder data.")
     # Get all rows from our table
-    patients_with_scheduled_reminders = PatientForm.query.all()
+    patients_with_scheduled_reminders = Patient.query.all()
     # Loop through our results
     for channel in patients_with_scheduled_reminders:
         # Add a job for each row in the table, sending reminder patient_contact_phone_number to channel
         SCHEDULER.add_job(trigger_phone_call, 'cron', [patient_form.patient_id, patient_form.patient_contact_phone_number], day_of_week='sun-sat', hour=patient_form.reminder_hour, minute=patient_form.reminder_minute, id=patient_form.patient_id + "_patient_call")
-        print(create_logging_label() + "PatientForm name and time that we scheduled call for: " + patient_form.patient_id + " at " + str(patient_form.reminder_hour) + ":" + format_minutes_to_have_zero(patient_form.reminder_minute) + " with patient_contact_phone_number: " + patient_form.patient_contact_phone_number)
+        print(create_logging_label() + "Patient name and time that we scheduled call for: " + patient_form.patient_id + " at " + str(patient_form.reminder_hour) + ":" + format_minutes_to_have_zero(patient_form.reminder_minute) + " with patient_contact_phone_number: " + patient_form.patient_contact_phone_number)
 
 
 # Function that triggers the reminder call
