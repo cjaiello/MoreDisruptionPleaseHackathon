@@ -193,8 +193,7 @@ def talk():
         action='http://oldiesbutgoodies.herokuapp.com/recording',
         method='GET',
         max_length=20,
-        finish_on_key='*',
-        transcribe=True
+        finish_on_key='*'
     )
     resp.say('I did not receive a recording')
     return str(resp)
@@ -203,6 +202,8 @@ def talk():
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
     print(request)
+    print("\n")
+    print(request.body.TranscriptionText)
     return str(request)
 
 
