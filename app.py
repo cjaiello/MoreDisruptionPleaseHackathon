@@ -185,13 +185,19 @@ def remove_starting_zeros_from_time(time):
 
 
 @app.route("/test", methods=['GET', 'POST'])
-def hello_monkey():
+def talk():
     """Respond to incoming requests."""
     resp = VoiceResponse()
     resp.say("Christina can go get dinner now that this works.")
-    resp.record(timeout=10, transcribe=True)
+    resp.record(timeout=20, transcribe=True, transcribeCallback="http://oldiesbutgoodies.herokuapp.com/recording")
 
-    print(str(resp))
+    return resp
+
+
+@app.route("/recording", methods=['GET', 'POST'])
+def recording():
+    print(request)
+    print(request.TranscriptionText)
 
 
 if __name__ == '__main__':
