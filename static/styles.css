@@ -177,3 +177,12 @@ input::-moz-placeholder {  /* Firefox 19+ */
 input:-ms-input-placeholder {
   color: #a1ce5b !important;
 }
+
+.styled-select {
+   background: #e0f3c2;
+   border: none;
+   font-size: 20px;
+   height: 40px;
+   padding: 5px;
+   width: 100px;
+}

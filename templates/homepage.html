@@ -45,11 +45,13 @@
 			<div class="input text">
 				{{ form.reminder_hour.label }}
 				<br> {{ form.reminder_hour(class_="time", placeholder="00") }} {{ form.reminder_minute(class_="time", placeholder="00") }}
-				<select name= colours method="GET" action="/">
-				    {% for option in form.am_or_pm %}
-				    <option value= "{{option}}" SELECTED>{{option}}</option>"
-				    {% endfor %}
-				</select>
+				<div class="styled_select">
+					<select name= colours method="GET" action="/">
+					    {% for option in form.am_or_pm %}
+					    <option value= "{{option}}" SELECTED>{{option}}</option>"
+					    {% endfor %}
+					</select>
+				</div>
 			</div>
 
 			<div class="input text">
