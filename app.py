@@ -188,7 +188,7 @@ def remove_starting_zeros_from_time(time):
 def hello_monkey():
     """Respond to incoming requests."""
     resp = VoiceResponse()
-    resp.say("Hello Monkey")
+    resp.say("Christina can go get dinner now that this works.")
 
     return str(resp)
 

@@ -1,3 +1,5 @@
+# Test file, used to test making calls
+
 from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse
 
@@ -11,6 +13,6 @@ client = Client(account_sid, auth_token)
 call = client.calls.create(
     to="+19788579570",
     from_="+18573203552",
-    url="https://demo.twilio.com/welcome/voice/")
+    url="http://oldiesbutgoodies.herokuapp.com/test")
 
 print(call.sid)
