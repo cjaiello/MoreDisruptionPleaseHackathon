@@ -24,13 +24,19 @@ class Patient(DB.Model):
     reminder_hour = DB.Column(DB.Integer)
     reminder_minute = DB.Column(DB.Integer)
     patient_contact_phone_number = DB.Column(DB.String(120))
+    patient_phone_number = DB.Column(DB.String(120))
+    patient_contact_name = DB.Column(DB.String(120))
+    am_or_pm = DB.Column(DB.String(2))
 
-    def __init__(self, patient_id, patient_password, reminder_hour, reminder_minute, patient_contact_phone_number):
+    def __init__(self, patient_id, patient_password, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, am_or_pm):
         self.patient_id = patient_id
         self.patient_password = patient_password
         self.reminder_hour = reminder_hour
         self.reminder_minute = reminder_minute
         self.patient_contact_phone_number = patient_contact_phone_number
+        self.patient_phone_number = patient_phone_number
+        self.patient_contact_name = patient_contact_name
+        self.am_or_pm = am_or_pm
 
     def __repr__(self):
         return '<Patient %r>' % self.patient_id
@@ -38,11 +44,14 @@ class Patient(DB.Model):
 
 # Our form model
 class PatientForm(Form):
-    patient_id = TextField('Name:', validators=[validators.required()])
+    patient_id = TextField('Patient ID:', validators=[validators.required()])
     patient_password = TextField('Password:')
-    reminder_hour = TextField('Call Hour:')
-    reminder_minute = TextField('Call Minute:')
+    reminder_hour = TextField('Time to Call Patient:')
+    reminder_minute = TextField('Time to Call Patient:')
+    patient_phone_number = TextField('Patient\'s Phone Number:')
+    patient_contact_name = TextField('Patient Contact\'s Name:')
     patient_contact_phone_number = TextField('Patient Contact\'s Phone Number:')
+    am_or_pm = ['am', 'pm']
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -55,32 +64,39 @@ def homepage():
         patient_password = request.form['patient_password']
         reminder_hour = remove_starting_zeros_from_time(request.form['reminder_hour'])
         reminder_minute = remove_starting_zeros_from_time(request.form['reminder_minute'])
-        patient_contact_phone_number = request.form['patient_contact_phone_number']
+        patient_phone_number = parse_phone_number(request.form['patient_phone_number'])
+        patient_contact_name = parse_phone_number(request.form['patient_contact_name'])
+        patient_contact_phone_number = parse_phone_number(request.form['patient_contact_phone_number'])
+        am_or_pm = parse_phone_number(request.form['am_or_pm'])
         # If the form field was valid...
         if form.validate():
             # Look for patient in database
             if not DB.session.query(Patient).filter(Patient.patient_id == patient_id).count():
                 # Patient isn't in database. Create our patient object and add them to the database
-                patient = Patient(patient_id, reminder_hour, reminder_minute, patient_contact_phone_number)
+                patient = Patient(patient_id, calculate_am_or_pm(reminder_hour, am_or_pm), reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name)
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
-                SCHEDULER.add_job(trigger_phone_call, 'cron', [patient_form.patient_id, patient_contact_phone_number], day_of_week='sun-sat', hour=reminder_hour, minute=reminder_minute, id=patient_form.patient_id + "_patient_call")
-                print(create_logging_label() + "Set " + patient_id + "'s reminder time to " + str(reminder_hour) + ":" + format_minutes_to_have_zero(reminder_minute) + " with reminder patient_contact_phone_number: " + patient_contact_phone_number)
+                SCHEDULER.add_job(trigger_phone_call, 'cron', [patient_form.patient_id, patient_phone_number], day_of_week='sun-sat', hour=calculate_am_or_pm(reminder_hour, am_or_pm), minute=reminder_minute, id=patient_form.patient_id + "_patient_call")
+                print(create_logging_label() + "Set " + patient_id + "'s reminder time to " + str(calculate_am_or_pm(reminder_hour, am_or_pm)) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
 
             else:
                 # Update user's info (if values weren't empty)
                 patient = Patient.query.filter_by(patient_id = patient_id).first()
                 patient.reminder_hour = reminder_hour if reminder_hour != None else patient_form.reminder_hour
                 patient.reminder_minute = reminder_minute if reminder_minute != None else patient_form.reminder_minute
-                patient.patient_contact_phone_number = patient_contact_phone_number if patient_contact_phone_number != None else patient.patient_contact_phone_number
+                patient.patient_contact_phone_number = patient_contact_phone_number if patient_contact_phone_number != None else patient_contact_phone_number
+                patient.patient_contact_name = patient_contact_name if patient_contact_name != None else patient_contact_name
+                patient.patient_phone_number = patient_phone_number if patient_phone_number != None else patient.patient_phone_number
+                patient.am_or_pm = am_or_pm if am_or_pm != None else patient.am_or_pm
+                patient.reminder_hour = calculate_am_or_pm(reminder_hour, patient.am_or_pm)
                 DB.session.commit()
                 # Next we will update the call the patient job if one of those values was edited
-                if (patient_contact_phone_number != None or reminder_hour != None or reminder_minute != None):
+                if (patient_phone_number != None or reminder_hour != None or reminder_minute != None):
                     # Updating this job's timing (need to delete and re-add)
                     SCHEDULER.remove_job(patient_id + "_patient_call")
-                    SCHEDULER.add_job(trigger_phone_call, 'cron', [patient_form.patient_id, patient_form.patient_contact_phone_number], day_of_week='sun-sat', hour=patient_form.reminder_hour, minute=patient_form.reminder_minute, id=patient_form.patient_id + "_patient_call")
-                    print(create_logging_label() + "Updated " + patient_id + "'s call time to " + str(patient_form.reminder_hour) + ":" + format_minutes_to_have_zero(patient_form.reminder_minute) + " with phone number patient_contact_phone_number: " + patient_contact_phone_number)
+                    SCHEDULER.add_job(trigger_phone_call, 'cron', [patient.patient_id, patient.patient_phone_number], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
+                    print(create_logging_label() + "Updated " + patient_id + "'s call time to " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " " + am_or_pm + " with phone number patient_phone_number: " + patient.patient_phone_number)
         else:
             print(create_logging_label() + "Could not update reminder time. Issue was: " + str(request))
 
@@ -96,14 +112,14 @@ def set_schedules():
     # Loop through our results
     for patient in patients_with_scheduled_reminders:
         # Add a job for each row in the table, sending reminder patient_contact_phone_number to channel
-        SCHEDULER.add_job(trigger_phone_call, 'cron', [patient.patient_id, patient.patient_contact_phone_number], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
-        print(create_logging_label() + "Patient name and time that we scheduled call for: " + patient.patient_id + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_contact_phone_number)
+        SCHEDULER.add_job(trigger_phone_call, 'cron', [patient.patient_id, patient.patient_phone_number], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
+        print(create_logging_label() + "Patient name and time that we scheduled call for: " + patient.patient_id + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_phone_number)
 
 
 # Function that triggers the reminder call
 # Here is where we need to add in the Google Voice API to make calls
 # We also need to store responses in our database
-def trigger_phone_call(patient_id, patient_contact_phone_number):
+def trigger_phone_call(patient_id, phone_number):
     return null;
 
 
@@ -130,6 +146,27 @@ def format_minutes_to_have_zero(minutes):
             return "0" + str(minutes)
         else:
             return str(minutes)
+
+
+# Parse phone number
+def parse_phone_number(phone_number_string):
+    # Remove dashes
+    phone_number_string = phone_number_string.replace('-','')
+    # Remove spaces
+    phone_number_string = phone_number_string.replace(' ','')
+    # Remove parens
+    phone_number_string = phone_number_string.replace('(','')
+    phone_number_string = phone_number_string.replace(')','')
+    #Remove periods
+    phone_number_string = phone_number_string.replace('.','')
+    return phone_number_string
+
+
+# Adds 12 if PM else keeps as original time
+def calculate_am_or_pm(reminder_hour, am_or_pm):
+    if (am_or_pm == "pm"):
+        reminder_hour += 12
+    return reminder_hour
 
 
 # Scheduler doesn't like zeros at the start of numbers...

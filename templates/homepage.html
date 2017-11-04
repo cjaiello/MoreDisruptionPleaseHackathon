@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>Oldies But Goodies</title>
+	<title>Care-ordinate</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 
@@ -11,7 +11,7 @@
 
 	<nav class="navigation">
 		<div class="header_text">
-			Oldies But Goodies
+			"Care-ordinate"
 		</div>
 	</nav>
 
@@ -28,33 +28,38 @@
 				<center>
 					<img src="static/logo.svg" id="icon" width="300" height="300" class="centered">
 				</center>
-
 				<p>Use this form to add or update your patient information.</p>
-
-				<ol>
-					<li>Hours are in military time, so 1pm == 13, 2pm == 14, etc.</li>
-					<li>Patient name is the only required field.</li>
-				</ol>
+				<p>Patient name is the only required field.</p>
 			</div>
 
 			<div class="input text">
 				{{ form.patient_id.label }}
-				<br> {{ form.patient_id }}
-			</div>
-
-			<div class="input password">
-				{{ form.patient_password.label }}
-				<br> {{ form.patient_password }}
+				<br> {{ form.patient_id(placeholder="Patient's Identification Number") }}
 			</div>
 
 			<div class="input text">
 				{{ form.reminder_hour.label }}
-				<br> {{ form.reminder_hour(class_="time") }} {{ form.reminder_minute(class_="time") }}
+				<br> {{ form.reminder_hour(class_="time", placeholder="00") }} {{ form.reminder_minute(class_="time", placeholder="00") }}
+				<select name= colours method="GET" action="/">
+				    {% for option in form.am_or_pm %}
+				    <option value= "{{option}}" SELECTED>{{option}}</option>"
+				    {% endfor %}
+				</select>
+			</div>
+
+			<div class="input text">
+				{{ form.patient_phone_number.label }}
+				<br> {{ form.patient_phone_number(placeholder="000-000-0000") }}
+			</div>
+
+			<div class="input text">
+				{{ form.patient_contact_name.label }}
+				<br> {{ form.patient_contact_name(placeholder="Contact's Name") }}
 			</div>
 
 			<div class="input text">
 				{{ form.patient_contact_phone_number.label }}
-				<br> {{ form.patient_contact_phone_number }}
+				<br> {{ form.patient_contact_phone_number(placeholder="000-000-0000") }}
 			</div>
 
 			<div class="input submit">
@@ -72,7 +77,7 @@
 
 	<!-- Bottom Bar -->
 	<footer class="footer">
-		Bot by Oldies But Goodies
+		Made by Oldies But Goodies
 	</footer>
 </body>
 

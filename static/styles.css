@@ -1,8 +1,8 @@
 input[type=text] {
   border-radius: 4px;
-  width: 250px;
-  height: 50px;
-	font-size: 25px;
+  width: 350px;
+  height: 40px;
+	font-size: 20px;
 	color: #10496a;
 	padding: 0px 5px 0px 5px;
 	margin-top: 10px;
@@ -13,7 +13,7 @@ input[type=text] {
 
 body {
   margin: 5px;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 A: {
@@ -37,9 +37,9 @@ p {
 }
 
 .directions {
-	margin-bottom: 75px;
-	width: 40%;
-	padding: 10px 30px 10px 20px;
+	margin-bottom: 35px;
+	width: 45%;
+	padding: 10px 100px 10px 20px;
 	float: left;
 	height: 100%;
 }
@@ -51,7 +51,7 @@ p {
 
 .separator_line, .second_separator_line {
   margin: 0 auto;
-  width: 800px;
+  width: 1000px;
   height: 8px;
   padding-left: 5px;
   padding-right: 5px;
@@ -86,7 +86,8 @@ p {
 
 .footer {
   height: 20px;
-  width: 810px;
+  width: 1010px;
+  font-size: 14px;
   -moz-border-bottom-left-radius: 20px;
   -moz-border-bottom-right-radius: 20px;
   -webkit-border-bottom-left-radius: 20px;
@@ -97,10 +98,12 @@ p {
   margin: 0 auto;
   color: #ffffff;
 	text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .submitButton {
-  background-color: #0d8197;
+  background-color: #77c278;
   color: #ffffff;
 	height: 40px;
   font-weight: bold;
@@ -129,9 +132,9 @@ p {
 .navigation {
   background-color: #0d8197;
   margin: 0 auto;
-  width: 800px;
+  width: 1000px;
   color: #ffffff;
-  margin-top: 50px;
+  margin-top: 20px;
   padding: 10px 5px 10px 5px;
   -moz-border-top-left-radius: 20px;
   -moz-border-top-right-radius: 20px;
@@ -142,8 +145,8 @@ p {
 }
 
 .index_white_textbox {
-  width: 750px;
-  padding: 15px 30px 15px 30px;
+  width: 970px;
+  padding: 10px 20px 10px 20px;
   overflow: auto;
 }
 
@@ -152,5 +155,32 @@ p {
 }
 
 .time {
-  width: 100px !important;
+  width: 50px !important;
+}
+
+.minute {
+  padding-left: 20px !important;
+}
+
+input::-webkit-input-placeholder {
+  color: #a1ce5b !important;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+  color: #a1ce5b !important;
+}
+
+input::-moz-placeholder {  /* Firefox 19+ */
+  color: #a1ce5b !important;
+}
+
+input:-ms-input-placeholder {
+  color: #a1ce5b !important;
+}
+
+select {
+   background: #e0f3c2;
+   font-size: 20px;
+   height: 45px;
+   border: none;
 }
