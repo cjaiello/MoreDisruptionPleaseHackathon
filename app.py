@@ -202,7 +202,6 @@ def talk():
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
     print(request)
-    print(request.TranscriptionText)
 
 
 if __name__ == '__main__':
