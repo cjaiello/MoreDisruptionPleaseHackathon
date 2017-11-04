@@ -25,14 +25,16 @@ class Patient(DB.Model):
     reminder_minute = DB.Column(DB.Integer)
     patient_contact_phone_number = DB.Column(DB.String(120))
     patient_phone_number = DB.Column(DB.String(120))
+    patient_contact_name = DB.Column(DB.String(120))
 
-    def __init__(self, patient_id, patient_password, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number):
+    def __init__(self, patient_id, patient_password, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name):
         self.patient_id = patient_id
         self.patient_password = patient_password
         self.reminder_hour = reminder_hour
         self.reminder_minute = reminder_minute
         self.patient_contact_phone_number = patient_contact_phone_number
         self.patient_phone_number = patient_phone_number
+        self.patient_contact_name = patient_contact_name
 
     def __repr__(self):
         return '<Patient %r>' % self.patient_id
@@ -45,6 +47,7 @@ class PatientForm(Form):
     reminder_hour = TextField('Time to Call Patient:')
     reminder_minute = TextField('Time to Call Patient:')
     patient_phone_number = TextField('Patient\'s Phone Number:')
+    patient_contact_name = TextField('Patient Contact\'s Name:')
     patient_contact_phone_number = TextField('Patient Contact\'s Phone Number:')
 
 
@@ -59,13 +62,14 @@ def homepage():
         reminder_hour = remove_starting_zeros_from_time(request.form['reminder_hour'])
         reminder_minute = remove_starting_zeros_from_time(request.form['reminder_minute'])
         patient_phone_number = parse_phone_number(request.form['patient_phone_number'])
+        patient_contact_name = parse_phone_number(request.form['patient_contact_name'])
         patient_contact_phone_number = parse_phone_number(request.form['patient_contact_phone_number'])
         # If the form field was valid...
         if form.validate():
             # Look for patient in database
             if not DB.session.query(Patient).filter(Patient.patient_id == patient_id).count():
                 # Patient isn't in database. Create our patient object and add them to the database
-                patient = Patient(patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number)
+                patient = Patient(patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name)
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
@@ -78,6 +82,7 @@ def homepage():
                 patient.reminder_hour = reminder_hour if reminder_hour != None else patient_form.reminder_hour
                 patient.reminder_minute = reminder_minute if reminder_minute != None else patient_form.reminder_minute
                 patient.patient_contact_phone_number = patient_contact_phone_number if patient_contact_phone_number != None else patient_contact_phone_number
+                patient.patient_contact_name = patient_contact_name if patient_contact_name != None else patient_contact_name
                 patient.patient_phone_number = patient_phone_number if patient_phone_number != None else patient.patient_phone_number
                 DB.session.commit()
                 # Next we will update the call the patient job if one of those values was edited
