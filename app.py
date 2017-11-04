@@ -190,8 +190,7 @@ def talk():
     resp = VoiceResponse()
     resp.say("Christina can go get dinner now that this works.")
     resp.record(timeout=20, transcribe=True, transcribeCallback="http://oldiesbutgoodies.herokuapp.com/recording")
-
-    return resp
+    return str(resp)
 
 
 @app.route("/recording", methods=['GET', 'POST'])
