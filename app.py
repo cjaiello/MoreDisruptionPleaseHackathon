@@ -9,6 +9,7 @@ from flask import Flask, request, Response, jsonify, render_template
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from twilio.rest import Client
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
