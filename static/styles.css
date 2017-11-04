@@ -152,5 +152,9 @@ p {
 }
 
 .time {
-  width: 100px !important;
+  width: 115px !important;
+}
+
+.minute {
+  padding-left: 20px !important;
 }
