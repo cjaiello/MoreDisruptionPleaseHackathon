@@ -181,4 +181,6 @@ input:-ms-input-placeholder {
 select {
    background: #e0f3c2;
    font-size: 20px;
+   height: 40px;
+   border: none;
 }
