@@ -150,3 +150,7 @@ p {
 #icon {
   fill: #ffffff;
 }
+
+.time {
+  width: 100px;
+}
