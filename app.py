@@ -40,8 +40,8 @@ class Patient(DB.Model):
 class PatientForm(Form):
     patient_id = TextField('Name:', validators=[validators.required()])
     patient_password = TextField('Password:')
-    reminder_hour = TextField('Call Hour:')
-    reminder_minute = TextField('Call Minute:')
+    reminder_hour = TextField('Time to Call Patient:')
+    reminder_minute = TextField('Time to Call Patient:')
     patient_contact_phone_number = TextField('Patient Contact\'s Phone Number:')
 
 
