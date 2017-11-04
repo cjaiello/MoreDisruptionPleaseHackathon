@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, request, Response, jsonify, render_template
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
+from twilio.rest import Client
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
@@ -120,7 +121,14 @@ def set_schedules():
 # Here is where we need to add in the Google Voice API to make calls
 # We also need to store responses in our database
 def trigger_phone_call(patient_id, phone_number):
-    return null;
+    account_sid = "ACa7e27f592a57a9ec9d23873331ddbdad"
+    auth_token  = "1b77f5e9dc4db4f0d8655a38c1924f23"
+    client = Client(account_sid, auth_token)
+    call = client.calls.create(
+        to="+19788579570",
+        from_="+18573203552",
+        url="http://demo.twilio.com/docs/voice.xml")
+    print(call.sid)
 
 
 # Will fetch the patient's response from database
