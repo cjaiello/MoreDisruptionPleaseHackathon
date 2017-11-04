@@ -98,7 +98,7 @@ p {
   margin: 0 auto;
   color: #ffffff;
 	text-align: center;
-  padding: 20px;
+  padding-top: 20px;
 }
 
 .submitButton {
@@ -131,7 +131,7 @@ p {
 .navigation {
   background-color: #0d8197;
   margin: 0 auto;
-  width: 1000px;
+  width: 1010px;
   color: #ffffff;
   margin-top: 50px;
   padding: 10px 5px 10px 5px;
