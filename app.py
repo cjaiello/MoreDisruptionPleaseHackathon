@@ -189,7 +189,13 @@ def talk():
     """Respond to incoming requests."""
     resp = VoiceResponse()
     resp.say("Christina can go get dinner now that this works.")
-    resp.record(timeout=20, transcribe=True, transcribeCallback="http://oldiesbutgoodies.herokuapp.com/recording")
+    response.record(
+        action='http://oldiesbutgoodies.herokuapp.com/recording',
+        method='GET',
+        max_length=20,
+        finish_on_key='*'
+    )
+    response.say('I did not receive a recording')
     return str(resp)
 
 
