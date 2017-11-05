@@ -209,8 +209,6 @@ def recording():
 def transcribe():
     print("Transcribe:")
     print(request)
-    print("Request JSON")
-    print(request.get_json(force=True))
     print("Request Data")
     print(request.data)
     print("Hello?....")
