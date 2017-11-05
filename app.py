@@ -186,7 +186,7 @@ def remove_starting_zeros_from_time(time):
     return (re.search( r'0?(\d+)?', time, re.M|re.I)).group(1)
 
 
-@app.route("/test", methods=['GET', 'POST'])
+@app.route("/call", methods=['GET', 'POST'])
 def talk():
     resp = VoiceResponse()
     resp.say("Hello, how are you doing?", voice='woman')
@@ -202,16 +202,6 @@ def talk():
 def recording():
     print("Request:")
     print(request)
-    return(str(request))
-
-
-@app.route("/transcribe", methods=['GET', 'POST'])
-def transcribe():
-    print("Transcribe:")
-    print(request)
-    print("Request Data")
-    print(request.data)
-    print("Hello?....")
     return(str(request))
 
 
