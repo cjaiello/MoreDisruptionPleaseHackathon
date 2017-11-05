@@ -2,7 +2,7 @@ input[type=text] {
   border-radius: 4px;
   width: 350px;
   height: 40px;
-	font-size: 20px;
+	font-size: 15px;
 	color: #10496a;
 	padding: 0px 5px 0px 5px;
 	margin-top: 10px;
@@ -13,7 +13,7 @@ input[type=text] {
 
 body {
   margin: 5px;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 A: {
@@ -75,7 +75,7 @@ p {
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   color: #ffffff;
   text-align: center;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .navigation_section {
@@ -87,7 +87,7 @@ p {
 .footer {
   height: 20px;
   width: 1010px;
-  font-size: 14px;
+  font-size: 10px;
   -moz-border-bottom-left-radius: 20px;
   -moz-border-bottom-right-radius: 20px;
   -webkit-border-bottom-left-radius: 20px;
@@ -107,7 +107,7 @@ p {
   color: #ffffff;
 	height: 40px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   padding: 5px;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
   margin-top: 10px;
@@ -180,7 +180,7 @@ input:-ms-input-placeholder {
 
 select {
    background: #e0f3c2;
-   font-size: 20px;
+   font-size: 15px;
    height: 45px;
    border: none;
 }
