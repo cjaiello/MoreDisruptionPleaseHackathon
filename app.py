@@ -88,7 +88,7 @@ def homepage():
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
                 SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], day_of_week='sun-sat', hour=calculate_am_or_pm(reminder_hour, am_or_pm), minute=reminder_minute, id=patient.patient_id + "_patient_call")
-                print(create_logging_label() + "Set " + patient_id + "'s reminder time to " + str(calculate_am_or_pm(reminder_hour, am_or_pm)) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
+                log("Set " + patient_id + "'s reminder time to " + str(calculate_am_or_pm(reminder_hour, am_or_pm)) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
 
             else:
                 # Update user's info (if values weren't empty)
@@ -107,9 +107,9 @@ def homepage():
                     # Updating this job's timing (need to delete and re-add)
                     SCHEDULER.remove_job(patient_id + "_patient_call")
                     SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
-                    print(create_logging_label() + "Updated " + patient_id + "'s call time to " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " " + am_or_pm + " with phone number patient_phone_number: " + patient.patient_phone_number)
+                    log("Updated " + patient_id + "'s call time to " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " " + am_or_pm + " with phone number patient_phone_number: " + patient.patient_phone_number)
         else:
-            print(create_logging_label() + "Could not update reminder time. Issue was: " + str(request))
+            log("Could not update reminder time. Issue was: " + str(request))
 
     return render_template('homepage.html', form=form)
 
@@ -117,21 +117,21 @@ def homepage():
 # Setting the reminder schedules for already-existing jobs
 # @return nothing
 def set_schedules():
-    print(create_logging_label() + "Loading previously-submitted call data.")
+    log("Loading previously-submitted call data.")
     # Get all rows from our table
     patients_with_scheduled_reminders = Patient.query.all()
     # Loop through our results
     for patient in patients_with_scheduled_reminders:
         # Add a job for each row in the table, sending reminder patient_contact_phone_number to channel
         SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
-        print(create_logging_label() + "Patient name and time that we scheduled call for: " + patient.patient_id + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_phone_number)
+        log("Patient name and time that we scheduled call for: " + patient.patient_id + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_phone_number)
 
 
 # Function that triggers the wellness call
 # Here is where we need to add in the Google Voice API to make calls
 # We also need to store responses in our database
 def trigger_checkup_call(patient_id, phone_number, patient_name):
-    print(create_logging_label() + "Calling patient with ID " + patient_id + " and name " + patient_name + " at phone number " + phone_number)
+    log("Calling patient with ID " + patient_id + " and name " + patient_name + " at phone number " + phone_number)
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
@@ -140,7 +140,7 @@ def trigger_checkup_call(patient_id, phone_number, patient_name):
 
 # Function that triggers a followup call after an appointment
 def trigger_followup_call(patient_id, phone_number, patient_name, appointment_day, appointment_type):
-    print(create_logging_label() + "Calling patient with ID " + patient_id + " and name " + patient_name + " at phone number " + phone_number)
+    log("Calling patient with ID " + patient_id + " and name " + patient_name + " at phone number " + phone_number)
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
@@ -149,6 +149,7 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
 
 # Makes a call to someone
 def placeCall(patient_name, phone_number):
+    log("Placing a call to " + patient_name + "'s contact at number " + phone_number)
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
@@ -160,10 +161,10 @@ def placeCall(patient_name, phone_number):
 def help():
     # Get the patient's phone number out of the query string
     patient_phone_number = request.args.get('Called')
-    print(create_logging_label() + "Patient in need of help is: " + patient_phone_number)
+    log("Patient in need of help is: " + patient_phone_number)
     # Grab that patient from the database
     patient = Patient.query.filter_by(patient_phone_number = patient_phone_number).first()
-    print(create_logging_label() + "Emergency contact to call is: " + patient.patient_contact_phone_number)
+    log("Emergency contact to call is: " + patient.patient_contact_phone_number)
     # Call their emergency contact
     placeCall(patient.patient_name, patient.patient_contact_phone_number)
 
@@ -172,7 +173,7 @@ def help():
 # or it can get the user's transcriptions
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
-    # print(create_logging_label() + "Request: " + str(request))
+    # log("Request: " + str(request))
     # # A list of transcription objects with the properties described above
     # transcriptions = CLIENT.transcriptions.list()
     # for transcription in transcriptions:
@@ -185,19 +186,19 @@ def recording():
 # Test method
 @app.route("/transcribe", methods=['GET', 'POST'])
 def transcribe():
-    print("Request: " + str(request))
     request_values = request.values
-    print("Request Values: " + str(request_values))
-    transcription_text_dict = request_values.get("TranscriptionText")
-    print("Transcription Text: " + str(transcription_text_dict))
-    transcription_text = transcription_text_dict.values;
-    print("Transcription Text: " + str(transcription_text))
-    patient_number = request_values.get("To")
+    log("Transcription Request Values: " + str(request_values))
+    # This is the number of the patient whom we just called:
+    patient_phone_number = request_values.get("To")
+    log("Phone number of patient whose message we transcribed: " + patient_phone_number)
+    # This is what the patient said:
+    transcription_text = request_values.get("TranscriptionText")
+    log("Transcription Text: " + transcription_text)
     # If we hear any trigger words, call their emergency contact
     if (("pain" in transcription_text) or ("sick" in transcription_text) or ("nausea" in transcription_text) or ("nauseous" in transcription_text) or ("bad" in transcription_text)):
-        print("Placing a call to " + patient.patient_name + "'s emergency contact at" + patient.patient_contact_phone_number)
-        patient = Patient.query.filter_by(patient_phone_number = patient_number).first()
-        placeCall(patient.patient_name, patient.patient_contact_phone_number)
+        log("Placing a call to " + patient.patient_name + "'s emergency contact at" + patient.patient_contact_phone_number)
+        #patient = Patient.query.filter_by(patient_phone_number = patient_phone_number).first()
+        #placeCall(patient.patient_name, patient.patient_contact_phone_number)
     return(transcription_text)
 
 
@@ -214,10 +215,10 @@ def get_patient_responses(patient_id):
 def remove_starting_zeros_from_time(time):
     return (re.search( r'0?(\d+)?', time, re.M|re.I)).group(1)
 
-# Used for logging when actions happen
-# @return string with logging time
-def create_logging_label():
-    return strftime("%Y-%m-%d %H:%M:%S", localtime()) + "| "
+
+# Creates a log message
+def log(logged_text):
+    print(strftime("%Y-%m-%d %H:%M:%S", localtime()) + "| " + logged_text)
 
 
 # For logging purposes
@@ -261,4 +262,4 @@ set_schedules()
 # Running the scheduling
 SCHEDULER.start()
 
-print(create_logging_label() + "Patient Call Bot was started up and scheduled.")
+log("Patient Call Bot was started up and scheduled.")
