@@ -3,12 +3,13 @@
 import API.athenahealth.athenahealthapi as athenahealthapi
 import datetime
 import pandas as pd
+import os
 
 ####################################################################################################
 # Setup
 ####################################################################################################
-key = '5zthy7bfyqn8krrk4n2ghnqz'
-secret = 'RYa479xrVEJ5ceQ'
+key = os.environ['KEY']
+secret = os.environ['SECRET']
 version = 'preview1'
 practiceid = 000000
 
