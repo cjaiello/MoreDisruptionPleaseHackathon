@@ -246,7 +246,7 @@ def parse_phone_number(phone_number_string):
 # Adds 12 if PM else keeps as original time
 def calculate_am_or_pm(reminder_hour, am_or_pm):
     if (am_or_pm == "pm"):
-        reminder_hour += 12
+        reminder_hour  = reminder_hour + 12
     return reminder_hour
 
 
