@@ -32,7 +32,6 @@ class Patient(DB.Model):
     patient_contact_phone_number = DB.Column(DB.String(120))
     patient_phone_number = DB.Column(DB.String(120))
     patient_contact_name = DB.Column(DB.String(120))
-    am_or_pm = DB.Column(DB.String(2))
     patient_name = DB.Column(DB.String(120))
 
     def __init__(self, patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, patient_name):
@@ -94,7 +93,6 @@ def homepage():
                 patient.patient_contact_phone_number = patient_contact_phone_number if patient_contact_phone_number != None else patient_contact_phone_number
                 patient.patient_contact_name = patient_contact_name if patient_contact_name != None else patient_contact_name
                 patient.patient_phone_number = patient_phone_number if patient_phone_number != None else patient.patient_phone_number
-                patient.am_or_pm = am_or_pm if am_or_pm != None else patient.am_or_pm
                 patient.patient_name = patient_name if patient_name != None else patient.patient_name
                 patient.reminder_hour = calculate_am_or_pm(reminder_hour, patient.am_or_pm)
                 DB.session.commit()
