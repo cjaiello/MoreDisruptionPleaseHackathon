@@ -158,19 +158,19 @@ p {
 }
 
 input::-webkit-input-placeholder {
-  color: #84bbb3 !important;
+  color: #75b1a8 !important;
 }
 
 input:-moz-placeholder { /* Firefox 18- */
-  color: #84bbb3 !important;
+  color: #75b1a8 !important;
 }
 
 input::-moz-placeholder {  /* Firefox 19+ */
-  color: #84bbb3 !important;
+  color: #75b1a8 !important;
 }
 
 input:-ms-input-placeholder {
-  color: #84bbb3 !important;
+  color: #75b1a8 !important;
 }
 
 select {
