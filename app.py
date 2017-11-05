@@ -124,7 +124,7 @@ def testpage():
     if request.method == 'POST':
         # Get form input
         name = request.form['name']
-        phone_number = request.form['phone_number']
+        phone_number = parse_phone_number(request.form['phone_number'])
         call = CLIENT.calls.create(
             to="+1" + phone_number,
             from_="+18573203552",
