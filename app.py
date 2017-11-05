@@ -210,6 +210,7 @@ def transcribe():
     print("Transcribe:")
     print(request)
     print(request.get_json(force=True))
+    print(request.data)
     return(str(request))
 
 
