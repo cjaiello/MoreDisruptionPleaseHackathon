@@ -186,7 +186,7 @@ def recording():
 @app.route("/transcribe", methods=['GET', 'POST'])
 def transcribe():
     print("Request: " + str(request))
-    request_values = str(request.values)
+    request_values = request.values
     print("Request Values: " + request_values)
     transcription_text = request_values.get("TranscriptionText")
     patient_number = request_values.get("To")
