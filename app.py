@@ -145,7 +145,7 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
 
 # Makes a call to someone
 def placeEmergencyCall(patient_name, phone_number, patient_contact_name):
-    log("Placing a call to " + patient_name + "'s contact at number " + phone_number)
+    log("Placing a call to " + patient_name + "'s contact " + patient_contact_name + " at number " + phone_number)
     call = CLIENT.calls.create(
     to="+1" + phone_number,
     from_="+18573203552",
