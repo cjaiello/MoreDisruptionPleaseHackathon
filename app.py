@@ -216,7 +216,7 @@ def transcribe():
         # This is what the patient said:
         transcription_text = request_values.get("TranscriptionText")
         log("Transcription Text: " + transcription_text)
-        symptoms = ["six", "seven", "eight", "nine", "ten"]
+        symptoms = ["six", "seven", "eight", "nine", "ten", "7", "8", "9", "10"]
         for symptom in symptoms:
             if (symptom in transcription_text):
                 patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
