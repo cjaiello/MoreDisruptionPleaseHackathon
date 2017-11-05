@@ -57,7 +57,7 @@ class PatientForm(Form):
     patient_contact_name = TextField('Patient Contact\'s Name:')
     patient_contact_phone_number = TextField('Patient Contact\'s Phone Number:')
     am_or_pm = ['am', 'pm']
-    patient_name = TextField('Patient Name:', validators=[validators.required()])
+    patient_name = TextField('Patient Name:')
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -143,10 +143,11 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
 
 
 # Makes a call to someone
+# Phone number needs to have +1 at the start when being passed into here
 def placeEmergencyCall(patient_name, phone_number, patient_contact_name):
     log("Placing a call to " + patient_name + "'s contact at number " + phone_number)
     call = CLIENT.calls.create(
-    to="+" + phone_number,
+    to=phone_number,
     from_="+18573203552",
     url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name + "&ContactName=" + patient_contact_name)
 
@@ -191,7 +192,7 @@ def transcribe():
     log("Transcription Text: " + transcription_text)
     # If we hear any trigger words, call their emergency contact
     if (("pain" in transcription_text) or ("sick" in transcription_text) or ("nausea" in transcription_text) or ("nauseous" in transcription_text) or ("bad" in transcription_text)):
-        patient = Patient.query.filter_by(patient_phone_number = patient_phone_number).first()
+        patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
         log("Placing a call to " + patient.patient_name + "'s emergency contact at" + patient.patient_contact_phone_number)
         placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name)
     return(transcription_text)
