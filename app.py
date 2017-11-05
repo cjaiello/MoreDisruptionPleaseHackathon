@@ -185,6 +185,7 @@ def transcribe():
     print("Request Content: " + str(request.content))
     print("Request JSON: " + str(request.json))
     print("Request data: " + str(request.data))
+    print("Response: " + str(response))
     # A list of transcription objects with the properties described above
     transcriptions = CLIENT.transcriptions.list()
     for transcription in transcriptions:
