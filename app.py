@@ -182,6 +182,7 @@ def recording():
 def transcribe():
     print("Request: " + str(request))
     print("Request Values: " + str(request.values))
+    print("Request Content: " + str(request.content))
     print("Request JSON: " + str(request.json))
     print("Request data: " + str(request.data))
     # A list of transcription objects with the properties described above
