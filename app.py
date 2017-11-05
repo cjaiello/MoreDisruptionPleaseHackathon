@@ -192,19 +192,27 @@ def talk():
     resp.say("Hello, how are you doing?", voice='alice')
     resp.record(
         action='http://oldiesbutgoodies.herokuapp.com/recording',
-        method='POST',
+        method='GET',
         max_length=20,
         finish_on_key='*',
         playBeep=False,
-        transcribe=True
+        transcribe=True,
+        transcribeCallback='http://oldiesbutgoodies.herokuapp.com/transcribe'
     )
     return str(resp)
 
 
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
-    time.sleep(15)
     print("Request:")
+    print(request)
+    return(str(request))
+
+
+@app.route("/transcribe", methods=['GET', 'POST'])
+def recording():
+    time.sleep(15)
+    print("Transcribe:")
     print(request)
     print(request.body)
     print(request.body.TranscriptionText)
