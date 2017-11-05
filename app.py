@@ -83,7 +83,7 @@ def homepage():
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
-                SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], day_of_week='sun-sat', hour=calculate_am_or_pm(reminder_hour, am_or_pm), minute=reminder_minute, id=patient.patient_id + "_patient_call")
+                SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], hour=calculate_am_or_pm(reminder_hour, am_or_pm), minute=reminder_minute, id=patient.patient_id + "_patient_call")
                 log("Set " + patient_id + "'s reminder time to " + str(calculate_am_or_pm(reminder_hour, am_or_pm)) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
 
             else:
@@ -101,7 +101,7 @@ def homepage():
                 if (patient_phone_number != None or reminder_hour != None or reminder_minute != None):
                     # Updating this job's timing (need to delete and re-add)
                     SCHEDULER.remove_job(patient_id + "_patient_call")
-                    SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
+                    SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
                     log("Updated " + patient_id + "'s call time to " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " " + am_or_pm + " with phone number patient_phone_number: " + patient.patient_phone_number)
         else:
             log("Could not update reminder time. Issue was: " + str(request))
@@ -118,7 +118,7 @@ def set_schedules():
     # Loop through our results
     for patient in patients_with_scheduled_reminders:
         # Add a job for each row in the table, sending reminder patient_contact_phone_number to channel
-        SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
+        SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
         log("Patient name and time that we scheduled call for: " + patient.patient_id + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_phone_number)
 
 
