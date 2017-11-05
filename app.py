@@ -187,7 +187,7 @@ def transcribe():
     # A list of transcription objects with the properties described above
     transcriptions = CLIENT.transcriptions.list()
     for transcription in transcriptions:
-        if((transcription_text != None) && (transcription_text != "")):
+        if((transcription.transcription_text != None) & (transcription.transcription_text != "")):
             # This is a valid recording, so do something with it.
             print(transcription.transcription_text)
     return(str(request))
