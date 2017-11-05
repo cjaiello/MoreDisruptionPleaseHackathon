@@ -34,6 +34,7 @@ class Patient(DB.Model):
     patient_phone_number = DB.Column(DB.String(120))
     patient_contact_name = DB.Column(DB.String(120))
     am_or_pm = DB.Column(DB.String(2))
+    patient_name = DB.Column(DB.String(120))
 
     def __init__(self, patient_id, patient_password, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, am_or_pm, patient_name):
         self.patient_id = patient_id
@@ -148,12 +149,12 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
 
 
 # Makes a call to someone
-def placeCall(patient_name, phone_number):
+def placeEmergencyCall(patient_name, phone_number, patient_contact_name):
     log("Placing a call to " + patient_name + "'s contact at number " + phone_number)
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name)
+    url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name + "&ContactName=" + patient_contact_name)
 
 
 # Calls for help
@@ -166,7 +167,7 @@ def help():
     patient = Patient.query.filter_by(patient_phone_number = patient_phone_number).first()
     log("Emergency contact to call is: " + patient.patient_contact_phone_number)
     # Call their emergency contact
-    placeCall(patient.patient_name, patient.patient_contact_phone_number)
+    placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name)
 
 
 # This should store the user's response recording URLs somewhere,
@@ -196,9 +197,9 @@ def transcribe():
     log("Transcription Text: " + transcription_text)
     # If we hear any trigger words, call their emergency contact
     if (("pain" in transcription_text) or ("sick" in transcription_text) or ("nausea" in transcription_text) or ("nauseous" in transcription_text) or ("bad" in transcription_text)):
+        patient = Patient.query.filter_by(patient_phone_number = patient_phone_number).first()
         log("Placing a call to " + patient.patient_name + "'s emergency contact at" + patient.patient_contact_phone_number)
-        #patient = Patient.query.filter_by(patient_phone_number = patient_phone_number).first()
-        #placeCall(patient.patient_name, patient.patient_contact_phone_number)
+        placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name)
     return(transcription_text)
 
 

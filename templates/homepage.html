@@ -38,6 +38,11 @@
 			</div>
 
 			<div class="input text">
+				{{ form.patient_name.label }}
+				<br> {{ form.patient_name(placeholder="Patient's Name") }}
+			</div>
+
+			<div class="input text">
 				{{ form.reminder_hour.label }}
 				<br> {{ form.reminder_hour(class_="time", placeholder="00") }} {{ form.reminder_minute(class_="time", placeholder="00") }}
 				<select name= colours method="GET" action="/">
