@@ -89,12 +89,6 @@ p {
   height: 10px;
   width: 1010px;
   font-size: 10px;
-  -moz-border-bottom-left-radius: 20px;
-  -moz-border-bottom-right-radius: 20px;
-  -webkit-border-bottom-left-radius: 20px;
-  -webkit-border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
   background-color: #008D78;
   margin: 0 auto;
   color: #ffffff;
