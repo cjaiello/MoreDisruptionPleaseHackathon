@@ -87,7 +87,7 @@ def homepage():
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
-                SCHEDULER.add_job(trigger_phone_call, 'cron', [patient_id, patient_phone_number, patient_name], day_of_week='sun-sat', hour=calculate_am_or_pm(reminder_hour, am_or_pm), minute=reminder_minute, id=patient.patient_id + "_patient_call")
+                SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], day_of_week='sun-sat', hour=calculate_am_or_pm(reminder_hour, am_or_pm), minute=reminder_minute, id=patient.patient_id + "_patient_call")
                 print(create_logging_label() + "Set " + patient_id + "'s reminder time to " + str(calculate_am_or_pm(reminder_hour, am_or_pm)) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
 
             else:
@@ -106,7 +106,7 @@ def homepage():
                 if (patient_phone_number != None or reminder_hour != None or reminder_minute != None):
                     # Updating this job's timing (need to delete and re-add)
                     SCHEDULER.remove_job(patient_id + "_patient_call")
-                    SCHEDULER.add_job(trigger_phone_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
+                    SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
                     print(create_logging_label() + "Updated " + patient_id + "'s call time to " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " " + am_or_pm + " with phone number patient_phone_number: " + patient.patient_phone_number)
         else:
             print(create_logging_label() + "Could not update reminder time. Issue was: " + str(request))
@@ -123,19 +123,28 @@ def set_schedules():
     # Loop through our results
     for patient in patients_with_scheduled_reminders:
         # Add a job for each row in the table, sending reminder patient_contact_phone_number to channel
-        SCHEDULER.add_job(trigger_phone_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
+        SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], day_of_week='sun-sat', hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
         print(create_logging_label() + "Patient name and time that we scheduled call for: " + patient.patient_id + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_phone_number)
 
 
-# Function that triggers the reminder call
+# Function that triggers the wellness call
 # Here is where we need to add in the Google Voice API to make calls
 # We also need to store responses in our database
-def trigger_phone_call(patient_id, phone_number, patient_name):
+def trigger_checkup_call(patient_id, phone_number, patient_name):
     print(create_logging_label() + "Calling patient with ID " + patient_id + " and name " + patient_name + " at phone number " + phone_number)
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
     url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?" + str(patient_name))
+
+
+# Function that triggers a followup call after an appointment
+def trigger_followup_call(patient_id, phone_number, patient_name, appointment_day, appointment_type):
+    print(create_logging_label() + "Calling patient with ID " + patient_id + " and name " + patient_name + " at phone number " + phone_number)
+    call = CLIENT.calls.create(
+    to="+" + phone_number,
+    from_="+18573203552",
+    url="https://handler.twilio.com/twiml/EH79b471e1be5b4f670b818845bf13a026?Name=" + str(patient_name) + "?AppointmentDay=" + appointment_day + "?AppointmentType=" + appointment_type)
 
 
 # Calls for help
@@ -160,7 +169,7 @@ def help():
 def recording():
     print(create_logging_label() + "Request: " + str(request))
     # A list of transcription objects with the properties described above
-    transcriptions = client.transcriptions.list()
+    transcriptions = CLIENT.transcriptions.list()
     for transcription in transcriptions:
         print(transcription.transcription_text)
     return(str(request))
@@ -171,7 +180,7 @@ def recording():
 def transcribe():
     print(create_logging_label() + "Request: " + str(request))
     # A list of transcription objects with the properties described above
-    transcriptions = client.transcriptions.list()
+    transcriptions = CLIENT.transcriptions.list()
     for transcription in transcriptions:
         print(transcription.transcription_text)
     return(str(request))
