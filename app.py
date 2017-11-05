@@ -143,11 +143,10 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
 
 
 # Makes a call to someone
-# Phone number needs to have +1 at the start when being passed into here
 def placeEmergencyCall(patient_name, phone_number, patient_contact_name):
     log("Placing a call to " + patient_name + "'s contact at number " + phone_number)
     call = CLIENT.calls.create(
-    to=phone_number,
+    to="+1" + phone_number,
     from_="+18573203552",
     url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name + "&ContactName=" + patient_contact_name)
 
