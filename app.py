@@ -169,6 +169,7 @@ def help():
 # or it can get the user's transcriptions
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
+    log("A call was made. Information: " + str(request))
     # log("Request: " + str(request))
     # # A list of transcription objects with the properties described above
     # transcriptions = CLIENT.transcriptions.list()
