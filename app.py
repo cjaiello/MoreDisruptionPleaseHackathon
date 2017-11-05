@@ -144,12 +144,18 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
 
 
 # Makes a call to someone
-def placeEmergencyCall(patient_name, phone_number, patient_contact_name):
-    log("Placing a call to " + patient_name + "'s contact " + patient_contact_name + " at number " + phone_number)
+def placeEmergencyCall(patient_name, phone_number, patient_contact_name, symptom):
+    url = ""
+    if (symptom != None):
+        url = "https://handler.twilio.com/twiml/EH9fb208ad494c53c3e252fdf11782db85?Name=" + patient_name.strip() + "&ContactName=" + patient_contact_name.strip() + "&Symptom=" + symptom
+        log("Placing a call to " + patient_name + "'s contact " + patient_contact_name + " at number " + phone_number + " with symptom " + str(symptom))
+    else:
+        url = "https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name.strip() + "&ContactName=" + patient_contact_name.strip()
+        log("Placing a call to " + patient_name + "'s contact " + patient_contact_name + " at number " + phone_number
     call = CLIENT.calls.create(
     to="+1" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name.strip() + "&ContactName=" + patient_contact_name.strip())
+    url=url)
 
 
 # Calls for help
@@ -187,11 +193,13 @@ def transcribe():
         # This is what the patient said:
         transcription_text = request_values.get("TranscriptionText")
         log("Transcription Text: " + transcription_text)
-        # If we hear any trigger words, call their emergency contact
-        if (("pain" in transcription_text) or ("sick" in transcription_text) or ("nausea" in transcription_text) or ("nauseous" in transcription_text) or ("bad" in transcription_text)):
-            patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
-            log("Placing a call to " + patient.patient_name + "'s emergency contact " + patient.patient_contact_name + " at " + patient.patient_contact_phone_number)
-            placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name)
+        symptoms = ["pain", "sick", "bad", "nausea", "nauseous"]
+        for symptom in symptoms:
+            if (symptom in transcription_text):
+                patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
+                log("Placing a call to " + patient.patient_name + "'s emergency contact " + patient.patient_contact_name + " at " + patient.patient_contact_phone_number + " due to symptom " + symptom)
+                placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name, symptom)
+    log(str(request_values))
     return(str(request_values))
 
 
