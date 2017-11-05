@@ -35,14 +35,13 @@ class Patient(DB.Model):
     am_or_pm = DB.Column(DB.String(2))
     patient_name = DB.Column(DB.String(120))
 
-    def __init__(self, patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, am_or_pm, patient_name):
+    def __init__(self, patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, patient_name):
         self.patient_id = patient_id
         self.reminder_hour = reminder_hour
         self.reminder_minute = reminder_minute
         self.patient_contact_phone_number = patient_contact_phone_number
         self.patient_phone_number = patient_phone_number
         self.patient_contact_name = patient_contact_name
-        self.am_or_pm = am_or_pm
         self.patient_name = patient_name
 
     def __repr__(self):
