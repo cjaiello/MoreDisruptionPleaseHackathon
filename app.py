@@ -164,7 +164,7 @@ def recording():
 
 # Test method
 @app.route("/transcribe", methods=['GET', 'POST'])
-def recording():
+def transcribe():
     print(create_logging_label() + "Request: " + request)
     # A list of transcription objects with the properties described above
     transcriptions = client.transcriptions.list()
