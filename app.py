@@ -26,7 +26,7 @@ CLIENT = Client(ACCOUNT_SID, AUTH_TOKEN)
 class Patient(DB.Model):
     __tablename__ = "patients"
     id = DB.Column(DB.Integer, primary_key=True)
-    patient_id = DB.Column(DB.String(120), unique=True)
+    patient_id = DB.Column(DB.String(120), unique=True, primary_key=True)
     reminder_hour = DB.Column(DB.Integer)
     reminder_minute = DB.Column(DB.Integer)
     patient_contact_phone_number = DB.Column(DB.String(120))
@@ -35,6 +35,7 @@ class Patient(DB.Model):
     patient_name = DB.Column(DB.String(120))
 
     def __init__(self, patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, patient_name):
+        self.id = int(patient_id)
         self.patient_id = patient_id
         self.reminder_hour = reminder_hour
         self.reminder_minute = reminder_minute
