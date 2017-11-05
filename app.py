@@ -84,6 +84,7 @@ def homepage():
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
                 SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], hour=int(calculate_am_or_pm(reminder_hour, am_or_pm)), minute=reminder_minute, id=patient.patient_id)
+                log("Job ID is: " + patient.patient_id)
                 log("Set " + patient_id + "'s reminder time to " + str(reminder_hour) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
 
             else:
@@ -107,6 +108,15 @@ def homepage():
             log("Could not update reminder time. Issue was: " + str(request))
 
     return render_template('homepage.html', form=form)
+
+
+@app.route("/test", methods=['GET', 'POST'])
+def testpage():
+    call = CLIENT.calls.create(
+        to="+1" + request.args.get('number'),
+        from_="+18573203552",
+        url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?Name=Christina")
+    return render_template('testpage.html')
 
 
 # Setting the reminder schedules for already-existing jobs
