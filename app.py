@@ -129,7 +129,7 @@ def testpage():
             to="+1" + phone_number,
             from_="+18573203552",
             url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?Name=" + name)
-    return render_template('testpage.html')
+    return render_template('testpage.html', form=form)
 
 
 # Setting the reminder schedules for already-existing jobs
