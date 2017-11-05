@@ -95,7 +95,7 @@ def homepage():
                 patient.patient_contact_name = patient_contact_name if patient_contact_name != None else patient_contact_name
                 patient.patient_phone_number = patient_phone_number if patient_phone_number != None else patient.patient_phone_number
                 patient.patient_name = patient_name if patient_name != None else patient.patient_name
-                patient.reminder_hour = calculate_am_or_pm(reminder_hour, patient.am_or_pm)
+                patient.reminder_hour = calculate_am_or_pm(reminder_hour, am_or_pm)
                 DB.session.commit()
                 # Next we will update the call the patient job if one of those values was edited
                 if (patient_phone_number != None or reminder_hour != None or reminder_minute != None):
