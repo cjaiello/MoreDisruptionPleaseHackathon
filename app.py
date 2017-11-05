@@ -194,6 +194,7 @@ def talk():
         action='http://oldiesbutgoodies.herokuapp.com/recording',
         method='GET',
         max_length=20,
+        transcribe=True
     )
     return str(resp)
 
