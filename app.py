@@ -196,7 +196,6 @@ def talk():
         max_length=20,
         finish_on_key='*',
         playBeep=False,
-        transcribe=True,
         transcribeCallback='http://oldiesbutgoodies.herokuapp.com/transcribe'
     )
     return str(resp)
