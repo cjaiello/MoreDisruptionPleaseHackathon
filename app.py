@@ -209,7 +209,7 @@ def recording():
 def transcribe():
     print("Transcribe:")
     print(request)
-    print(request.args)
+    print(request.get_json(force=True))
     return(str(request))
 
 
