@@ -9,6 +9,7 @@ from flask import Flask, request, Response, jsonify, render_template
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse
+import time
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
@@ -201,10 +202,9 @@ def talk():
 
 
 @app.route("/recording", methods=['GET', 'POST'])
-def recording(request, response):
+def recording():
+    time.sleep(10)
     print(request)
-    print(response)
-    return request
 
 
 if __name__ == '__main__':
