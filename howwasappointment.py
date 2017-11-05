@@ -13,6 +13,6 @@ client = Client(account_sid, auth_token)
 call = client.calls.create(
     to="+19788579570",
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH79b471e1be5b4f670b818845bf13a026?Name=Christina?AppointmentDay=Saturday?AppointmentType=Cardiologist")
+    url="https://handler.twilio.com/twiml/EH79b471e1be5b4f670b818845bf13a026?Name=Christina&AppointmentDay=Saturday&AppointmentType=Cardiologist")
 
 print(call.sid)

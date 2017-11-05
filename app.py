@@ -144,7 +144,7 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH79b471e1be5b4f670b818845bf13a026?Name=" + str(patient_name) + "?AppointmentDay=" + appointment_day + "?AppointmentType=" + appointment_type)
+    url="https://handler.twilio.com/twiml/EH79b471e1be5b4f670b818845bf13a026?Name=" + str(patient_name) + "&AppointmentDay=" + appointment_day + "&AppointmentType=" + appointment_type)
 
 
 # Calls for help
@@ -167,22 +167,29 @@ def help():
 # or it can get the user's transcriptions
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
-    print(create_logging_label() + "Request: " + str(request))
-    # A list of transcription objects with the properties described above
-    transcriptions = CLIENT.transcriptions.list()
-    for transcription in transcriptions:
-        print(transcription.transcription_text)
+    # print(create_logging_label() + "Request: " + str(request))
+    # # A list of transcription objects with the properties described above
+    # transcriptions = CLIENT.transcriptions.list()
+    # for transcription in transcriptions:
+    #     if((transcription_text != None) && (transcription_text != "")):
+    #         # This is a valid recording, so do something with it.
+    #         print(transcription.transcription_text)
     return(str(request))
 
 
 # Test method
 @app.route("/transcribe", methods=['GET', 'POST'])
 def transcribe():
-    print(create_logging_label() + "Request: " + str(request))
+    print("Request: " + str(request))
+    print("Request Values: " + str(request.values))
+    print("Request JSON: " + str(request.json))
+    print("Request data: " + str(request.data))
     # A list of transcription objects with the properties described above
     transcriptions = CLIENT.transcriptions.list()
     for transcription in transcriptions:
-        print(transcription.transcription_text)
+        if((transcription_text != None) && (transcription_text != "")):
+            # This is a valid recording, so do something with it.
+            print(transcription.transcription_text)
     return(str(request))
 
 
