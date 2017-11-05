@@ -205,7 +205,7 @@ def recording():
     auth_token  = "1b77f5e9dc4db4f0d8655a38c1924f23"
     print("Request:")
     print(request)
-    time.sleep(15)
+    time.sleep(5)
     client = Client(account_sid, auth_token)
     # A list of transcription objects with the properties described above
     transcriptions = client.transcriptions.list()
