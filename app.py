@@ -195,7 +195,8 @@ def talk():
         method='GET',
         max_length=20,
         finish_on_key='*',
-        playBeep="false"
+        playBeep=False,
+        transcribe=True
     )
     resp.say('I did not receive a recording')
     return str(resp)
@@ -205,6 +206,7 @@ def talk():
 def recording():
     time.sleep(10)
     print(request)
+    return request
 
 
 if __name__ == '__main__':
