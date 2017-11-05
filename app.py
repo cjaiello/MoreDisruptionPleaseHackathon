@@ -182,10 +182,7 @@ def recording():
 def transcribe():
     print("Request: " + str(request))
     print("Request Values: " + str(request.values))
-    print("Request Content: " + str(request.content))
-    print("Request JSON: " + str(request.json))
-    print("Request data: " + str(request.data))
-    print("Response: " + str(response))
+    print("Request Values: " + str(request.values.get("TranscriptionText")))
     # A list of transcription objects with the properties described above
     transcriptions = CLIENT.transcriptions.list()
     for transcription in transcriptions:
