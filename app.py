@@ -19,7 +19,7 @@ DB = SQLAlchemy(app)
 SCHEDULER = BackgroundScheduler()
 ACCOUNT_SID = "ACa7e27f592a57a9ec9d23873331ddbdad"
 AUTH_TOKEN  = "1b77f5e9dc4db4f0d8655a38c1924f23"
-CLIENT = Client(account_sid, auth_token)
+CLIENT = Client(ACCOUNT_SID, AUTH_TOKEN)
 
 
 # Create our database model
