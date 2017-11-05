@@ -192,7 +192,7 @@ def talk():
     resp.say("Hello, how are you doing?")
     resp.record(
         action='http://oldiesbutgoodies.herokuapp.com/recording',
-        method='GET',
+        method='POST',
         max_length=20,
         finish_on_key='*',
         playBeep=False,
