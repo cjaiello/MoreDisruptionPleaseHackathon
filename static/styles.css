@@ -17,9 +17,9 @@ body {
 }
 
 A: {
-  /* Links */
   font-weight: bold;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #10496a;
 }
 
 body {
