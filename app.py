@@ -204,10 +204,11 @@ def talk():
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
     time.sleep(15)
+    print("Request:")
     print(request)
-    return(str(request))
+    print("Response:")
     print(response)
-    return(str(response))
+    return(str(request))
 
 
 if __name__ == '__main__':
