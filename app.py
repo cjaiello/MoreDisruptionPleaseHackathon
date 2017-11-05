@@ -128,7 +128,7 @@ def testpage():
         call = CLIENT.calls.create(
             to="+1" + phone_number,
             from_="+18573203552",
-            url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?Name=" + name)
+            url="https://handler.twilio.com/twiml/EHcdd9c97af0c0db4a1e48d634bff92d28?Name=" + name)
     return render_template('testpage.html', form=form)
 
 
@@ -154,7 +154,7 @@ def trigger_checkup_call(patient_id, phone_number, patient_name):
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?" + str(patient_name).strip())
+    url="https://handler.twilio.com/twiml/EHcdd9c97af0c0db4a1e48d634bff92d28?" + str(patient_name).strip())
 
 
 # Function that triggers a followup call after an appointment
@@ -216,7 +216,7 @@ def transcribe():
         # This is what the patient said:
         transcription_text = request_values.get("TranscriptionText")
         log("Transcription Text: " + transcription_text)
-        symptoms = ["pain", "sick", "bad", "nausea", "nauseous", "dizzy", "ill", "unwell", "help"]
+        symptoms = ["six", "seven", "eight", "nine", "ten"]
         for symptom in symptoms:
             if (symptom in transcription_text):
                 patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
