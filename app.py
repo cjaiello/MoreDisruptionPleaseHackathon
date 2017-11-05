@@ -192,7 +192,7 @@ def transcribe():
             patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
             log("Placing a call to " + patient.patient_name + "'s emergency contact " + patient.patient_contact_name + " at " + patient.patient_contact_phone_number)
             placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name)
-    return(transcription_text)
+    return(str(request_values))
 
 
 # Will fetch the patient's response from database
