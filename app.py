@@ -162,6 +162,17 @@ def recording():
     return(str(request))
 
 
+# Test method
+@app.route("/transcribe", methods=['GET', 'POST'])
+def recording():
+    print(create_logging_label() + "Request: " + request)
+    # A list of transcription objects with the properties described above
+    transcriptions = client.transcriptions.list()
+    for transcription in transcriptions:
+        print(transcription.transcription_text)
+    return(str(request))
+
+
 # Will fetch the patient's response from database
 def get_patient_responses(patient_id):
     return null
