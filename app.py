@@ -151,7 +151,7 @@ def placeEmergencyCall(patient_name, phone_number, patient_contact_name, symptom
         log("Placing a call to " + patient_name + "'s contact " + patient_contact_name + " at number " + phone_number + " with symptom " + str(symptom))
     else:
         url = "https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name.strip() + "&ContactName=" + patient_contact_name.strip()
-        log("Placing a call to " + patient_name + "'s contact " + patient_contact_name + " at number " + phone_number
+        log("Placing a call to " + patient_name + "'s contact " + patient_contact_name + " at number " + phone_number)
     call = CLIENT.calls.create(
     to="+1" + phone_number,
     from_="+18573203552",
