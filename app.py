@@ -150,7 +150,8 @@ def help():
     url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9")
 
 
-# This might not be needed
+# This should store the user's response recording URLs somewhere,
+# or it can get the user's transcriptions
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
     print(create_logging_label() + "Request: " + request)
