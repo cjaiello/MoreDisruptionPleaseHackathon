@@ -66,20 +66,20 @@ def homepage():
 
     if request.method == 'POST':
         # Get form input
-        patient_id = (request.form['patient_id']).strip()
-        patient_name = (request.form['patient_name']).strip()
-        reminder_hour = (remove_starting_zeros_from_time(request.form['reminder_hour'])).strip()
-        reminder_minute = (remove_starting_zeros_from_time(request.form['reminder_minute'])).strip()
-        patient_phone_number = (parse_phone_number(request.form['patient_phone_number'])).strip()
-        patient_contact_name = (parse_phone_number(request.form['patient_contact_name'])).strip()
-        patient_contact_phone_number = (parse_phone_number(request.form['patient_contact_phone_number'])).strip()
+        patient_id = request.form['patient_id']
+        patient_name = request.form['patient_name']).strip()
+        reminder_hour = remove_starting_zeros_from_time(request.form['reminder_hour'])
+        reminder_minute = remove_starting_zeros_from_time(request.form['reminder_minute'])
+        patient_phone_number = parse_phone_number(request.form['patient_phone_number'])
+        patient_contact_name = parse_phone_number(request.form['patient_contact_name'])
+        patient_contact_phone_number = parse_phone_number(request.form['patient_contact_phone_number'])
         am_or_pm = parse_phone_number(request.form['am_or_pm'])
         # If the form field was valid...
         if form.validate():
             # Look for patient in database
             if not DB.session.query(Patient).filter(Patient.patient_id == patient_id).count():
                 # Patient isn't in database. Create our patient object and add them to the database
-                patient = Patient(patient_id, calculate_am_or_pm(reminder_hour, am_or_pm), reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, patient_name)
+                patient = Patient(patient_id, calculate_am_or_pm(reminder_hour, am_or_pm), reminder_minute, (patient_contact_phone_number).strip(), (patient_phone_number).strip(), (patient_contact_name).strip(), (patient_name).strip())
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
@@ -131,7 +131,7 @@ def trigger_checkup_call(patient_id, phone_number, patient_name):
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?" + str(patient_name))
+    url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?" + str(patient_name).strip())
 
 
 # Function that triggers a followup call after an appointment
@@ -140,7 +140,7 @@ def trigger_followup_call(patient_id, phone_number, patient_name, appointment_da
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH79b471e1be5b4f670b818845bf13a026?Name=" + str(patient_name) + "&AppointmentDay=" + appointment_day + "&AppointmentType=" + appointment_type)
+    url="https://handler.twilio.com/twiml/EH79b471e1be5b4f670b818845bf13a026?Name=" + str(patient_name).strip() + "&AppointmentDay=" + appointment_day.strip() + "&AppointmentType=" + appointment_type.strip())
 
 
 # Makes a call to someone
@@ -149,7 +149,7 @@ def placeEmergencyCall(patient_name, phone_number, patient_contact_name):
     call = CLIENT.calls.create(
     to="+1" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name + "&ContactName=" + patient_contact_name)
+    url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9?Name=" + patient_name.strip() + "&ContactName=" + patient_contact_name.strip())
 
 
 # Calls for help
