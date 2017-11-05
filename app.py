@@ -189,7 +189,7 @@ def remove_starting_zeros_from_time(time):
 @app.route("/test", methods=['GET', 'POST'])
 def talk():
     resp = VoiceResponse()
-    resp.say("Hello, how are you doing?")
+    resp.say("Hello, how are you doing?", voice='alice')
     resp.record(
         action='http://oldiesbutgoodies.herokuapp.com/recording',
         method='POST',
