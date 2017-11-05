@@ -206,8 +206,8 @@ def recording():
     time.sleep(15)
     print("Request:")
     print(request)
-    print("Response:")
-    print(response)
+    print(request.body)
+    print(request.body.TranscriptionText)
     return(str(request))
 
 
