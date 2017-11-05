@@ -17,6 +17,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 DB = SQLAlchemy(app)
 SCHEDULER = BackgroundScheduler()
+ACCOUNT_SID = "ACa7e27f592a57a9ec9d23873331ddbdad"
+AUTH_TOKEN  = "1b77f5e9dc4db4f0d8655a38c1924f23"
+CLIENT = Client(account_sid, auth_token)
 
 
 # Create our database model
@@ -110,7 +113,7 @@ def homepage():
 # Setting the reminder schedules for already-existing jobs
 # @return nothing
 def set_schedules():
-    print(create_logging_label() + "Loading previously-submitted reminder data.")
+    print(create_logging_label() + "Loading previously-submitted call data.")
     # Get all rows from our table
     patients_with_scheduled_reminders = Patient.query.all()
     # Loop through our results
@@ -124,14 +127,38 @@ def set_schedules():
 # Here is where we need to add in the Google Voice API to make calls
 # We also need to store responses in our database
 def trigger_phone_call(patient_id, phone_number):
-    account_sid = "ACa7e27f592a57a9ec9d23873331ddbdad"
-    auth_token  = "1b77f5e9dc4db4f0d8655a38c1924f23"
-    client = Client(account_sid, auth_token)
-    call = client.calls.create(
-        to="+19788579570",
-        from_="+18573203552",
-        url="http://demo.twilio.com/docs/voice.xml")
-    print(call.sid)
+    print(create_logging_label() + "Calling patient " + patient_id + " at phone number " + phone_number)
+    call = CLIENT.calls.create(
+    to="+" + phone_number,
+    from_="+18573203552",
+    url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a")
+
+
+# Calls for help
+@app.route("/help", methods=['GET', 'POST'])
+def help():
+    # Get the patient's phone number out of the query string
+    patient_phone_number = request.args.get('Called')
+    print(create_logging_label() + "Patient in need of help is: " + patient_phone_number)
+    # Grab that patient from the database
+    patient = Patient.query.filter_by(patient_phone_number = patient_phone_number).first()
+    print(create_logging_label() + "Emergency contact to call is: " + patient.patient_contact_phone_number)
+    # Call their emergency contact
+    call = CLIENT.calls.create(
+    to="+" + patient.patient_contact_phone_number,
+    from_="+18573203552",
+    url="https://handler.twilio.com/twiml/EH5902f7e1b80f2e83c38860c373ead6b9")
+
+
+# This might not be needed
+@app.route("/recording", methods=['GET', 'POST'])
+def recording():
+    print(create_logging_label() + "Request: " + request)
+    # A list of transcription objects with the properties described above
+    transcriptions = client.transcriptions.list()
+    for transcription in transcriptions:
+        print(transcription.transcription_text)
+    return(str(request))
 
 
 # Will fetch the patient's response from database
@@ -141,6 +168,11 @@ def get_patient_responses(patient_id):
 
 # ------ Util Functions ------ #
 
+
+# Scheduler doesn't like zeros at the start of numbers...
+# @param time: string to remove starting zeros from
+def remove_starting_zeros_from_time(time):
+    return (re.search( r'0?(\d+)?', time, re.M|re.I)).group(1)
 
 # Used for logging when actions happen
 # @return string with logging time
@@ -178,27 +210,6 @@ def calculate_am_or_pm(reminder_hour, am_or_pm):
     if (am_or_pm == "pm"):
         reminder_hour += 12
     return reminder_hour
-
-
-# Scheduler doesn't like zeros at the start of numbers...
-# @param time: string to remove starting zeros from
-def remove_starting_zeros_from_time(time):
-    return (re.search( r'0?(\d+)?', time, re.M|re.I)).group(1)
-
-
-@app.route("/recording", methods=['GET', 'POST'])
-def recording():
-    account_sid = "ACa7e27f592a57a9ec9d23873331ddbdad"
-    auth_token  = "1b77f5e9dc4db4f0d8655a38c1924f23"
-    print("Request:")
-    print(request)
-    time.sleep(9)
-    client = Client(account_sid, auth_token)
-    # A list of transcription objects with the properties described above
-    transcriptions = client.transcriptions.list()
-    for transcription in transcriptions:
-        print(transcription.transcription_text)
-    return(str(request))
 
 
 if __name__ == '__main__':
