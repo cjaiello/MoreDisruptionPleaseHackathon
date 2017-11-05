@@ -11,6 +11,7 @@ from twilio.rest import Client
 from twilio.twiml.voice_response import VoiceResponse
 import time
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -187,9 +188,8 @@ def remove_starting_zeros_from_time(time):
 
 @app.route("/test", methods=['GET', 'POST'])
 def talk():
-    """Respond to incoming requests."""
     resp = VoiceResponse()
-    resp.say("Christina can go get dinner now that this works.")
+    resp.say("Hello, how are you doing?")
     resp.record(
         action='http://oldiesbutgoodies.herokuapp.com/recording',
         method='GET',
@@ -198,15 +198,13 @@ def talk():
         playBeep=False,
         transcribe=True
     )
-    resp.say('I did not receive a recording')
     return str(resp)
 
 
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
-    time.sleep(10)
+    time.sleep(15)
     print(request)
-    return request
 
 
 if __name__ == '__main__':
