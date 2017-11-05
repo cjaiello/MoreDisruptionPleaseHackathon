@@ -3,7 +3,7 @@ input[type=text] {
   width: 350px;
   height: 25px;
 	font-size: 15px;
-	color: #84bbb3;
+	color: #008D78;
 	padding: 0px 5px 0px 5px;
 	margin-top: 10px;
 	background-color: #a5ccc6;
@@ -164,19 +164,19 @@ p {
 }
 
 input::-webkit-input-placeholder {
-  color: #a1ce5b !important;
+  color: #84bbb3 !important;
 }
 
 input:-moz-placeholder { /* Firefox 18- */
-  color: #a1ce5b !important;
+  color: #84bbb3 !important;
 }
 
 input::-moz-placeholder {  /* Firefox 19+ */
-  color: #a1ce5b !important;
+  color: #84bbb3 !important;
 }
 
 input:-ms-input-placeholder {
-  color: #a1ce5b !important;
+  color: #84bbb3 !important;
 }
 
 select {
