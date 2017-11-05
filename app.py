@@ -60,10 +60,16 @@ class PatientForm(Form):
     patient_name = TextField('Patient Name:')
 
 
+# Our test form
+class TestForm(Form):
+    name = TextField('Patient Name:', validators=[validators.required()])
+    phone_number = TextField('Patient Phone Number:', validators=[validators.required()])
+
+
+# Homepage. Form used to sign up.
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
     form = PatientForm(request.form)
-
     if request.method == 'POST':
         # Get form input
         patient_id = request.form['patient_id']
@@ -83,7 +89,9 @@ def homepage():
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
-                SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], hour=int(calculate_am_or_pm(reminder_hour, am_or_pm)), minute=reminder_minute, id=patient.patient_id)
+                log("ID: " + str(patient_id) + " Phone: " + str(patient_phone_number) + " Name: " + str(patient_name) + " Hour: " + str(int(calculate_am_or_pm(reminder_hour, am_or_pm))) + " Minute: " + str(reminder_minute) + " Job ID: " + str(patient.patient_id))
+                SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], day_of_week="*", hour=int(calculate_am_or_pm(reminder_hour, am_or_pm)), minute=reminder_minute, id=patient.patient_id)
+                log("Job ID is: " + patient.patient_id)
                 log("Set " + patient_id + "'s reminder time to " + str(reminder_hour) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
 
             else:
@@ -109,6 +117,21 @@ def homepage():
     return render_template('homepage.html', form=form)
 
 
+# Test page used to trigger a phone call.
+@app.route("/test", methods=['GET', 'POST'])
+def testpage():
+    form = TestForm(request.form)
+    if request.method == 'POST':
+        # Get form input
+        name = request.form['name']
+        phone_number = request.form['phone_number']
+        call = CLIENT.calls.create(
+            to="+1" + phone_number,
+            from_="+18573203552",
+            url="https://handler.twilio.com/twiml/EHcdd9c97af0c0db4a1e48d634bff92d28?Name=" + name)
+    return render_template('testpage.html', form=form)
+
+
 # Setting the reminder schedules for already-existing jobs
 # @return nothing
 def set_schedules():
@@ -131,7 +154,7 @@ def trigger_checkup_call(patient_id, phone_number, patient_name):
     call = CLIENT.calls.create(
     to="+" + phone_number,
     from_="+18573203552",
-    url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?" + str(patient_name).strip())
+    url="https://handler.twilio.com/twiml/EHcdd9c97af0c0db4a1e48d634bff92d28?" + str(patient_name).strip())
 
 
 # Function that triggers a followup call after an appointment
@@ -175,7 +198,7 @@ def help():
 # or it can get the user's transcriptions
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
-    log("A call was made. Information: " + str(request))
+    log("A call was made. Information: " + str(request.values))
     return(str(request))
 
 
@@ -193,7 +216,7 @@ def transcribe():
         # This is what the patient said:
         transcription_text = request_values.get("TranscriptionText")
         log("Transcription Text: " + transcription_text)
-        symptoms = ["pain", "sick", "bad", "nausea", "nauseous", "dizzy", "ill", "unwell", "help"]
+        symptoms = ["six", "seven", "eight", "nine", "ten", "7", "8", "9", "10"]
         for symptom in symptoms:
             if (symptom in transcription_text):
                 patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
