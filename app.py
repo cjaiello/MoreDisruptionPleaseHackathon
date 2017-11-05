@@ -210,7 +210,7 @@ def recording():
 
 
 @app.route("/transcribe", methods=['GET', 'POST'])
-def recording():
+def transcribe():
     time.sleep(15)
     print("Transcribe:")
     print(request)
