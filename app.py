@@ -205,6 +205,9 @@ def talk():
 def recording():
     time.sleep(15)
     print(request)
+    return(str(request))
+    print(response)
+    return(str(response))
 
 
 if __name__ == '__main__':
