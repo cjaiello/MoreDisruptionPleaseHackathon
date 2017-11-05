@@ -27,7 +27,6 @@ class Patient(DB.Model):
     __tablename__ = "patients"
     id = DB.Column(DB.Integer, primary_key=True)
     patient_id = DB.Column(DB.String(120), unique=True)
-    patient_password = DB.Column(DB.String(120))
     reminder_hour = DB.Column(DB.Integer)
     reminder_minute = DB.Column(DB.Integer)
     patient_contact_phone_number = DB.Column(DB.String(120))
@@ -36,9 +35,8 @@ class Patient(DB.Model):
     am_or_pm = DB.Column(DB.String(2))
     patient_name = DB.Column(DB.String(120))
 
-    def __init__(self, patient_id, patient_password, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, am_or_pm, patient_name):
+    def __init__(self, patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, am_or_pm, patient_name):
         self.patient_id = patient_id
-        self.patient_password = patient_password
         self.reminder_hour = reminder_hour
         self.reminder_minute = reminder_minute
         self.patient_contact_phone_number = patient_contact_phone_number
@@ -54,14 +52,13 @@ class Patient(DB.Model):
 # Our form model
 class PatientForm(Form):
     patient_id = TextField('Patient ID:', validators=[validators.required()])
-    patient_name = TextField('Patient Name:', validators=[validators.required()])
-    patient_password = TextField('Password:')
     reminder_hour = TextField('Time to Call Patient:')
     reminder_minute = TextField('Time to Call Patient:')
     patient_phone_number = TextField('Patient\'s Phone Number:')
     patient_contact_name = TextField('Patient Contact\'s Name:')
     patient_contact_phone_number = TextField('Patient Contact\'s Phone Number:')
     am_or_pm = ['am', 'pm']
+    patient_name = TextField('Patient Name:', validators=[validators.required()])
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -72,7 +69,6 @@ def homepage():
         # Get form input
         patient_id = request.form['patient_id']
         patient_name = request.form['patient_name']
-        patient_password = request.form['patient_password']
         reminder_hour = remove_starting_zeros_from_time(request.form['reminder_hour'])
         reminder_minute = remove_starting_zeros_from_time(request.form['reminder_minute'])
         patient_phone_number = parse_phone_number(request.form['patient_phone_number'])
