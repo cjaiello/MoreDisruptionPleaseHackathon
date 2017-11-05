@@ -181,14 +181,17 @@ def transcribe():
     # This is the number of the patient whom we just called:
     patient_phone_number = request_values.get("To")
     log("Phone number of patient whose message we transcribed: " + patient_phone_number)
-    # This is what the patient said:
-    transcription_text = request_values.get("TranscriptionText")
-    log("Transcription Text: " + transcription_text)
-    # If we hear any trigger words, call their emergency contact
-    if (("pain" in transcription_text) or ("sick" in transcription_text) or ("nausea" in transcription_text) or ("nauseous" in transcription_text) or ("bad" in transcription_text)):
-        patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
-        log("Placing a call to " + patient.patient_name + "'s emergency contact at" + patient.patient_contact_phone_number)
-        placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name)
+    transcription_status = request_values.get("TranscriptionStatus")
+    log("Transcription Status: " + transcription_status)
+    if (transcription_status != "failed"):
+        # This is what the patient said:
+        transcription_text = request_values.get("TranscriptionText")
+        log("Transcription Text: " + transcription_text)
+        # If we hear any trigger words, call their emergency contact
+        if (("pain" in transcription_text) or ("sick" in transcription_text) or ("nausea" in transcription_text) or ("nauseous" in transcription_text) or ("bad" in transcription_text)):
+            patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
+            log("Placing a call to " + patient.patient_name + "'s emergency contact at" + patient.patient_contact_phone_number)
+            placeEmergencyCall(patient.patient_name, patient.patient_contact_phone_number, patient.patient_contact_name)
     return(transcription_text)
 
 
