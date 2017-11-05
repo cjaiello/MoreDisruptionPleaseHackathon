@@ -117,7 +117,7 @@ def set_schedules():
     patients_with_scheduled_reminders = Patient.query.all()
     # Loop through our results
     for patient in patients_with_scheduled_reminders:
-        log("Patient Being Added or Updated: " + patient.patient_name + " and stripped name is " + patient.patient_name.strip() + " but did that properly remove whitespace?")
+        log("Patient Being Added or Updated: " + patient.patient_name)
         # Add a job for each row in the table, sending reminder patient_contact_phone_number to channel
         SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
         log("Patient name and time that we scheduled call for: " + patient.patient_name + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_phone_number)
@@ -170,13 +170,6 @@ def help():
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
     log("A call was made. Information: " + str(request))
-    # log("Request: " + str(request))
-    # # A list of transcription objects with the properties described above
-    # transcriptions = CLIENT.transcriptions.list()
-    # for transcription in transcriptions:
-    #     if((transcription_text != None) && (transcription_text != "")):
-    #         # This is a valid recording, so do something with it.
-    #         print(transcription.transcription_text)
     return(str(request))
 
 
