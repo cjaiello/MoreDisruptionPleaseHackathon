@@ -63,7 +63,7 @@ class PatientForm(Form):
 # Our test form
 class TestForm(Form):
     name = TextField('Patient Name:', validators=[validators.required()])
-    phone_number = TextField('Patient Phone Number:', validators=[validators.required())
+    phone_number = TextField('Patient Phone Number:', validators=[validators.required()])
 
 
 # Homepage. Form used to sign up.
