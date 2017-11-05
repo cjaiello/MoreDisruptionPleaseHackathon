@@ -206,6 +206,16 @@ def recording():
     return(str(request))
 
 
+@app.route("/transcribe", methods=['GET', 'POST'])
+def transcribe():
+    print("Transcribe:")
+    print(request)
+    print("Request Data")
+    print(request.data)
+    print("Hello?....")
+    return(str(request))
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
 
