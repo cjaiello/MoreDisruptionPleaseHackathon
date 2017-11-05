@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- Standup Bot by Christina Aiello, 2017 -->
+<html>
+
+<head>
+	<title>Care-ordinate</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+
+<body bgcolor="#10496a">
+
+	<nav class="navigation">
+		<div class="header_text">
+			"Care-ordinate"
+		</div>
+	</nav>
+
+	<section class="separator_line">
+	</section>
+	<section class="second_separator_line">
+	</section>
+
+	<section class="index_white_textbox">
+		<form action="" method="post">
+
+			{{ form.csrf }}
+			<div class="directions">
+				<center>
+					<img src="static/icon.png" id="icon" width="300" height="300" class="centered">
+				</center>
+				<p>Use this form to make a test call to a registered patient.</p>
+			</div>
+
+			<div class="input text">
+				{{ form.name.label }}
+				<br> {{ form.name(placeholder="Name Here") }}
+			</div>
+
+			<div class="input text">
+				{{ form.phone_number.label }}
+				<br> {{ form.phone_number(placeholder="Phone Number") }}
+			</div>
+		</form>
+	</section>
+	<!-- Closing tag for main white text box -->
+
+	<!-- Adds a bar across the page for colors -->
+	<section class="second_separator_line">
+	</section>
+	<section class="separator_line">
+	</section>
+
+	<!-- Bottom Bar -->
+	<footer class="footer">
+		Made by Oldies But Goodies
+	</footer>
+</body>
+
+</html>

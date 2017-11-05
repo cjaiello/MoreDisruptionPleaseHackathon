@@ -60,10 +60,16 @@ class PatientForm(Form):
     patient_name = TextField('Patient Name:')
 
 
+# Our test form
+class TestForm(Form):
+    name = TextField('Patient Name:', validators=[validators.required()])
+    phone_number = TextField('Patient Phone Number:', validators=[validators.required())
+
+
+# Homepage. Form used to sign up.
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
     form = PatientForm(request.form)
-
     if request.method == 'POST':
         # Get form input
         patient_id = request.form['patient_id']
@@ -111,12 +117,18 @@ def homepage():
     return render_template('homepage.html', form=form)
 
 
+# Test page used to trigger a phone call.
 @app.route("/test", methods=['GET', 'POST'])
 def testpage():
-    call = CLIENT.calls.create(
-        to="+1" + request.args.get('number'),
-        from_="+18573203552",
-        url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?Name=Christina")
+    form = TestForm(request.form)
+    if request.method == 'POST':
+        # Get form input
+        name = request.form['name']
+        phone_number = request.form['phone_number']
+        call = CLIENT.calls.create(
+            to="+1" + phone_number,
+            from_="+18573203552",
+            url="https://handler.twilio.com/twiml/EH3b9b39d5bc1a6958a8945ee8b4a9863a?Name=" + name)
     return render_template('testpage.html')
 
 
@@ -186,7 +198,7 @@ def help():
 # or it can get the user's transcriptions
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
-    log("A call was made. Information: " + str(request))
+    log("A call was made. Information: " + str(request.values))
     return(str(request))
 
 
