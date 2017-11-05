@@ -193,7 +193,7 @@ def transcribe():
         # This is what the patient said:
         transcription_text = request_values.get("TranscriptionText")
         log("Transcription Text: " + transcription_text)
-        symptoms = ["pain", "sick", "bad", "nausea", "nauseous", "dizzy", "ill", "unwell"]
+        symptoms = ["pain", "sick", "bad", "nausea", "nauseous", "dizzy", "ill", "unwell", "help"]
         for symptom in symptoms:
             if (symptom in transcription_text):
                 patient = Patient.query.filter_by(patient_phone_number = patient_phone_number.replace("+1","")).first()
