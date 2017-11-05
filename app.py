@@ -209,12 +209,7 @@ def recording():
 def transcribe():
     print("Transcribe:")
     print(request)
-    print(request.args.get('RecordingSid', ''))
-    print(request.args.get('TranscriptionText', ''))
-    print(request.args.get('TranscriptionSid', ''))
-    print(request.args.get('TranscriptionStatus', ''))
-    print(request.json.get('sid', ''))
-    print(request.json.get('transcription_text', ''))
+    print(request.args)
     return(str(request))
 
 
