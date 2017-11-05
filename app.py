@@ -204,16 +204,12 @@ def recording():
     print("Request:")
     print(request)
     return(str(request))
-
-
-@app.route("/transcribe", methods=['GET', 'POST'])
-def transcribe():
-    print("Transcribe:")
-    print(request)
-    print("Request Data")
-    print(request.data)
-    print("Hello?....")
-    return(str(request))
+    time.sleep(15)
+    client = Client(account_sid, auth_token)
+    # A list of transcription objects with the properties described above
+    transcriptions = client.transcriptions.list()
+    for transcription in transcriptions:
+        print(transcription.transcription_text)
 
 
 if __name__ == '__main__':
