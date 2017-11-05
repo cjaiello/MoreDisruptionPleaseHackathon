@@ -83,7 +83,7 @@ def homepage():
                 DB.session.add(patient)
                 DB.session.commit()
                 # Adding this additional phone call job to the queue
-                SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], hour=int(calculate_am_or_pm(reminder_hour, am_or_pm)), minute=reminder_minute, id=patient.patient_id + "_patient_call")
+                SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient_id, patient_phone_number, patient_name], hour=int(calculate_am_or_pm(reminder_hour, am_or_pm)), minute=reminder_minute, id=patient.patient_id)
                 log("Set " + patient_id + "'s reminder time to " + str(reminder_hour) + ":" + format_minutes_to_have_zero(reminder_minute) + " " + am_or_pm + " with reminder patient_phone_number: " + patient_phone_number)
 
             else:
@@ -100,8 +100,8 @@ def homepage():
                 # Next we will update the call the patient job if one of those values was edited
                 if (patient_phone_number != None or reminder_hour != None or reminder_minute != None):
                     # Updating this job's timing (need to delete and re-add)
-                    SCHEDULER.remove_job(patient_id + "_patient_call")
-                    SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], hour=int(calculate_am_or_pm(reminder_hour, am_or_pm)), minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
+                    SCHEDULER.remove_job(patient_id)
+                    SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], hour=int(calculate_am_or_pm(reminder_hour, am_or_pm)), minute=patient.reminder_minute, id=patient.patient_id)
                     log("Updated " + patient_id + "'s call time to " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " " + am_or_pm + " with phone number patient_phone_number: " + patient.patient_phone_number)
         else:
             log("Could not update reminder time. Issue was: " + str(request))
