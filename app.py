@@ -186,26 +186,13 @@ def remove_starting_zeros_from_time(time):
     return (re.search( r'0?(\d+)?', time, re.M|re.I)).group(1)
 
 
-@app.route("/call", methods=['GET', 'POST'])
-def talk():
-    resp = VoiceResponse()
-    resp.say("Hello, how are you doing?", voice='woman')
-    resp.record(
-        action='http://oldiesbutgoodies.herokuapp.com/recording',
-        method='GET',
-        max_length=20,
-        transcribe=True
-    )
-    return str(resp)
-
-
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
     account_sid = "ACa7e27f592a57a9ec9d23873331ddbdad"
     auth_token  = "1b77f5e9dc4db4f0d8655a38c1924f23"
     print("Request:")
     print(request)
-    time.sleep(5)
+    time.sleep(9)
     client = Client(account_sid, auth_token)
     # A list of transcription objects with the properties described above
     transcriptions = client.transcriptions.list()
