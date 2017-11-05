@@ -193,18 +193,18 @@ def talk():
         action='http://oldiesbutgoodies.herokuapp.com/recording',
         method='GET',
         max_length=20,
-        finish_on_key='*'
+        finish_on_key='*',
+        playBeep="false"
     )
     resp.say('I did not receive a recording')
     return str(resp)
 
 
 @app.route("/recording", methods=['GET', 'POST'])
-def recording():
+def recording(request, response):
     print(request)
-    print("\n")
-    print(request.body.TranscriptionText)
-    return str(request)
+    print(response)
+    return request
 
 
 if __name__ == '__main__':
