@@ -67,7 +67,7 @@ def homepage():
     if request.method == 'POST':
         # Get form input
         patient_id = request.form['patient_id']
-        patient_name = request.form['patient_name']).strip()
+        patient_name = request.form['patient_name']
         reminder_hour = remove_starting_zeros_from_time(request.form['reminder_hour'])
         reminder_minute = remove_starting_zeros_from_time(request.form['reminder_minute'])
         patient_phone_number = parse_phone_number(request.form['patient_phone_number'])
