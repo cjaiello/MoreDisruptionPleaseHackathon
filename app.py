@@ -201,15 +201,17 @@ def talk():
 
 @app.route("/recording", methods=['GET', 'POST'])
 def recording():
+    account_sid = "ACa7e27f592a57a9ec9d23873331ddbdad"
+    auth_token  = "1b77f5e9dc4db4f0d8655a38c1924f23"
     print("Request:")
     print(request)
-    return(str(request))
     time.sleep(15)
     client = Client(account_sid, auth_token)
     # A list of transcription objects with the properties described above
     transcriptions = client.transcriptions.list()
     for transcription in transcriptions:
         print(transcription.transcription_text)
+    return(str(request))
 
 
 if __name__ == '__main__':
