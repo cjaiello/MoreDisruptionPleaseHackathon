@@ -26,13 +26,13 @@ CLIENT = Client(ACCOUNT_SID, AUTH_TOKEN)
 class Patient(DB.Model):
     __tablename__ = "patients"
     id = DB.Column(DB.Integer, primary_key=True)
-    patient_id = DB.Column(DB.String(120), unique=True)
+    patient_id = DB.Column(DB.String(120), unique=False)
     reminder_hour = DB.Column(DB.Integer)
     reminder_minute = DB.Column(DB.Integer)
-    patient_contact_phone_number = DB.Column(DB.String(120))
-    patient_phone_number = DB.Column(DB.String(120))
-    patient_contact_name = DB.Column(DB.String(120))
-    patient_name = DB.Column(DB.String(120))
+    patient_contact_phone_number = DB.Column(DB.String(120), unique=False)
+    patient_phone_number = DB.Column(DB.String(120), unique=False)
+    patient_contact_name = DB.Column(DB.String(120), unique=False)
+    patient_name = DB.Column(DB.String(120), unique=False)
 
     def __init__(self, patient_id, reminder_hour, reminder_minute, patient_contact_phone_number, patient_phone_number, patient_contact_name, patient_name):
         self.id = int(patient_id)
@@ -117,7 +117,7 @@ def set_schedules():
     patients_with_scheduled_reminders = Patient.query.all()
     # Loop through our results
     for patient in patients_with_scheduled_reminders:
-        log("Patient Being Added or Updated: " + patient.patient_name + " and stripped name is " + patient.patient_name.strip())
+        log("Patient Being Added or Updated: " + patient.patient_name + " and stripped name is " + patient.patient_name.strip() + " but did that properly remove whitespace?")
         # Add a job for each row in the table, sending reminder patient_contact_phone_number to channel
         SCHEDULER.add_job(trigger_checkup_call, 'cron', [patient.patient_id, patient.patient_phone_number, patient.patient_name], hour=patient.reminder_hour, minute=patient.reminder_minute, id=patient.patient_id + "_patient_call")
         log("Patient name and time that we scheduled call for: " + patient.patient_name + " at " + str(patient.reminder_hour) + ":" + format_minutes_to_have_zero(patient.reminder_minute) + " with patient_contact_phone_number: " + patient.patient_phone_number)
