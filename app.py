@@ -187,10 +187,12 @@ def recording():
 def transcribe():
     print("Request: " + str(request))
     request_values = request.values
-    print("Request Values: " + request_values)
-    transcription_text = request_values.get("TranscriptionText")
+    print("Request Values: " + str(request_values))
+    transcription_text_dict = request_values.get("TranscriptionText")
+    print("Transcription Text: " + str(transcription_text_dict))
+    transcription_text = transcription_text_dict.values;
+    print("Transcription Text: " + str(transcription_text))
     patient_number = request_values.get("To")
-    print("Transcription Text: " + transcription_text)
     # If we hear any trigger words, call their emergency contact
     if (("pain" in transcription_text) or ("sick" in transcription_text) or ("nausea" in transcription_text) or ("nauseous" in transcription_text) or ("bad" in transcription_text)):
         print("Placing a call to " + patient.patient_name + "'s emergency contact at" + patient.patient_contact_phone_number)
