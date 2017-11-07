@@ -17,8 +17,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 DB = SQLAlchemy(app)
 SCHEDULER = BackgroundScheduler()
-ACCOUNT_SID = "ACa7e27f592a57a9ec9d23873331ddbdad"
-AUTH_TOKEN  = "1b77f5e9dc4db4f0d8655a38c1924f23"
+ACCOUNT_SID = os.environ['ACCOUNT_SID']
+AUTH_TOKEN  = os.environ['AUTH_TOKEN']
 CLIENT = Client(ACCOUNT_SID, AUTH_TOKEN)
 
 
