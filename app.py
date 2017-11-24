@@ -79,7 +79,7 @@ def homepage():
         patient_phone_number = parse_phone_number(request.form['patient_phone_number'])
         patient_contact_name = parse_phone_number(request.form['patient_contact_name'])
         patient_contact_phone_number = parse_phone_number(request.form['patient_contact_phone_number'])
-        am_or_pm = parse_phone_number(request.form['am_or_pm'])
+        am_or_pm = request.form['am_or_pm']
         # If the form field was valid...
         if form.validate():
             # Look for patient in database
